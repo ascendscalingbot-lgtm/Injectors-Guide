@@ -81,6 +81,8 @@
       -webkit-backdrop-filter: blur(26px);
       overflow: hidden;
     }
+    .click-card { cursor: pointer; transition: transform .22s ease, box-shadow .22s ease; }
+    .click-card:hover { transform: translateY(-3px); box-shadow: 0 24px 60px rgba(14,29,52,0.13); }
 
     .sidebar::after {
       content: "";
@@ -94,33 +96,16 @@
       pointer-events: none;
     }
 
-    .brand { position: relative; z-index: 1; margin-bottom: 26px; }
+    .brand { position: relative; z-index: 1; margin-bottom: 26px; text-align: center; }
     .brand .logo {
       display: block;
       font-family: "Newsreader", serif;
-      font-size: 33px;
-      line-height: 0.92;
+      font-size: 31px;
+      line-height: 1;
       font-style: italic;
       font-weight: 500;
-      letter-spacing: -1.1px;
+      letter-spacing: -1.3px;
       color: var(--ink);
-    }
-    .brand .script {
-      display: inline-block;
-      margin-top: -2px;
-      font-family: "Imperial Script", cursive;
-      font-size: 33px;
-      color: var(--blue);
-      transform: rotate(-3deg);
-    }
-    .brand .sub {
-      display: block;
-      margin-top: 7px;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2.4px;
-      color: var(--muted);
-      font-weight: 600;
     }
 
     .nav { position: relative; z-index: 1; display: grid; gap: 8px; }
@@ -190,6 +175,10 @@
     .agent-card small { position: relative; display: block; color: rgba(255,255,255,0.62); letter-spacing: 1.8px; text-transform: uppercase; font-size: 10px; }
     .agent-card strong { position: relative; display: block; margin-top: 7px; font-family: "Newsreader", serif; font-size: 24px; font-style: italic; font-weight: 500; }
     .agent-card p { position: relative; margin: 8px 0 0; color: rgba(255,255,255,0.72); font-size: 12px; line-height: 1.45; }
+    .profile-card { display: flex; align-items: center; gap: 13px; }
+    .profile-card strong { margin-top: 4px; font-size: 22px; }
+    .profile-card p { margin-top: 4px; }
+    .profile-avatar { position: relative; width: 54px; height: 54px; flex: 0 0 54px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #ffffff, var(--aqua)); color: var(--ink); font-weight: 800; box-shadow: 0 14px 32px rgba(0,0,0,0.18); }
 
     .main { min-width: 0; display: grid; gap: 18px; }
     .topbar {
@@ -219,6 +208,9 @@
     .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--aqua)); display: grid; place-items: center; color: white; font-weight: 700; box-shadow: 0 10px 20px rgba(45,110,247,0.25); }
     .user-menu strong { display: block; font-size: 13px; }
     .user-menu span { display: block; font-size: 11px; color: var(--muted); }
+    .ops-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; background: rgba(255,255,255,0.66); border: 1px solid rgba(14,29,52,0.08); color: var(--ink); font-size: 12px; font-weight: 700; white-space: nowrap; box-shadow: 0 12px 28px rgba(14,29,52,0.08); }
+    .ops-pill span { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(47,159,107,0.5); animation: pulseDot 1.4s infinite; }
+    @keyframes pulseDot { 70% { box-shadow: 0 0 0 9px rgba(47,159,107,0); } 100% { box-shadow: 0 0 0 0 rgba(47,159,107,0); } }
 
     .alert {
       display: flex;
@@ -384,25 +376,26 @@
   <div class="shell">
     <aside class="sidebar" aria-label="Dashboard navigation">
       <div class="brand">
-        <span class="logo">Injectors</span>
-        <span class="script">Guide</span>
-        <span class="sub">Founder Command Surface</span>
+        <span class="logo">Injectors Guide</span>
       </div>
       <nav class="nav">
-        <a class="active" href="#overview"><span class="left"><span class="ico">✦</span> Overview</span></a>
-        <a href="#attribution"><span class="left"><span class="ico">◒</span> Attribution</span></a>
-        <a href="#pipeline"><span class="left"><span class="ico">▦</span> Content Pipeline</span></a>
-        <a href="#seo"><span class="left"><span class="ico">⌁</span> SEO Command</span></a>
-        <a href="#paid"><span class="left"><span class="ico">◎</span> Paid Media</span></a>
-        <a href="#pr"><span class="left"><span class="ico">✉</span> PR Tracker</span></a>
-        <a href="#decisions"><span class="left"><span class="ico">!</span> Decisions Needed</span><span class="badge">7</span></a>
-        <a href="#activity"><span class="left"><span class="ico">↻</span> Activity Log</span></a>
-        <a href="#deploy"><span class="left"><span class="ico">⌘</span> Repo & Deploy</span></a>
+        <a class="active" href="/Injectors-Guide/dashboard/"><span class="left"><span class="ico">✦</span> Overview</span></a>
+        <a href="/Injectors-Guide/dashboard/attribution.html"><span class="left"><span class="ico">◒</span> Attribution</span></a>
+        <a href="/Injectors-Guide/dashboard/pipeline.html"><span class="left"><span class="ico">▦</span> Content Pipeline</span></a>
+        <a href="/Injectors-Guide/dashboard/seo.html"><span class="left"><span class="ico">⌁</span> SEO Command</span></a>
+        <a href="/Injectors-Guide/dashboard/paid-media.html"><span class="left"><span class="ico">◎</span> Paid Media</span></a>
+        <a href="/Injectors-Guide/dashboard/pr.html"><span class="left"><span class="ico">✉</span> PR Tracker</span></a>
+        <a href="/Injectors-Guide/dashboard/decisions.html"><span class="left"><span class="ico">!</span> Decisions Needed</span><span class="badge">7</span></a>
+        <a href="/Injectors-Guide/dashboard/activity.html"><span class="left"><span class="ico">↻</span> Activity Log</span></a>
+        <a href="/Injectors-Guide/dashboard/deploy.html"><span class="left"><span class="ico">⌘</span> Repo & Deploy</span></a>
       </nav>
-      <div class="agent-card">
-        <small>COS-IG Status</small>
-        <strong>Running paid-media watch.</strong>
-        <p>Next autonomous sync in 11 min. Stripe is source-of-truth; ad revenue is currently reconciling.</p>
+      <div class="agent-card profile-card">
+        <div class="profile-avatar">TA</div>
+        <div>
+          <small>Founder Account</small>
+          <strong>Traci Andreason</strong>
+          <p>MSN, FNP-C · Injectors Guide</p>
+        </div>
       </div>
     </aside>
 
@@ -410,12 +403,9 @@
       <header class="topbar">
         <div>
           <p class="title-kicker">Injectors Guide HQ · updated 2 min ago</p>
-          <h1>Business <span class="script-word">dashboard</span></h1>
+          <h1>Business Dashboard</h1>
         </div>
-        <div class="user-menu" aria-label="User menu">
-          <div class="avatar">TA</div>
-          <div><strong>Traci Andreason</strong><span>Founder · Rise Aesthetics</span></div>
-        </div>
+<div class="ops-pill"><span></span> All Systems Operational</div>
       </header>
 
       <div class="alert">
@@ -433,7 +423,7 @@
       </section>
 
       <section class="grid" id="attribution">
-        <article class="card">
+        <article class="card click-card" onclick="location.href='/Injectors-Guide/dashboard/attribution.html'">
           <div class="card-header">
             <div><h2>Attribution</h2><p>Revenue by channel with paid attribution set to 7-day click + 1-day view. Stripe remains the final source of truth.</p></div>
             <div class="segmented"><button>7d</button><button class="active">30d</button><button>90d</button><button>All</button></div>
@@ -459,7 +449,7 @@
           </div>
         </article>
 
-        <article class="card" id="decisions">
+        <article class="card click-card" id="decisions" onclick="location.href='/Injectors-Guide/dashboard/decisions.html'">
           <div class="card-header"><div><h2>Decisions Needed</h2><p>Everything requiring founder approval before publishing, spending, or clinical-claim use.</p></div></div>
           <div class="decision-list">
             <div class="decision"><div class="decision-top"><strong>Approve Meta creative batch #14</strong><span class="status green">Ad</span></div><p>3 testimonial angles using career autonomy hook. Clinical claims verified.</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div>
@@ -469,7 +459,7 @@
         </article>
       </section>
 
-      <section class="card" id="pipeline">
+      <section class="card click-card" id="pipeline" onclick="location.href='/Injectors-Guide/dashboard/pipeline.html'">
         <div class="card-header"><div><h2>Content Pipeline</h2><p>Drag-ready operating board for blog, YouTube, short-form, ad concepts, and PR pitches.</p></div><button class="export">Export CSV</button></div>
         <div class="kanban">
           <div class="lane"><h3>Idea</h3><div class="task"><strong>“How much can injectors make?”</strong><span class="tag">blog · salary keyword</span></div></div>
@@ -483,14 +473,14 @@
       </section>
 
       <section class="module-grid">
-        <article class="card mini" id="seo"><div class="card-header"><div><h2>SEO Command</h2><p>Rankings, GSC movement, technical health, and content gaps.</p></div></div><div class="module-list"><div class="row"><strong>“injector certification Utah”</strong><span>Pos 4 · +2</span></div><div class="row"><strong>Striking distance</strong><span>19 keywords</span></div><div class="row"><strong>Technical health</strong><span class="status green">92%</span></div><div class="row"><strong>GSC clicks</strong><span class="sparkline"></span></div></div></article>
-        <article class="card mini" id="paid"><div class="card-header"><div><h2>Paid Media</h2><p>Meta + Google campaigns, fatigue warnings, and budget pacing.</p></div></div><div class="module-list"><div class="row"><strong>Meta Prospecting CBO</strong><span class="status green">5.9x</span></div><div class="row"><strong>Google Brand Search</strong><span class="status yellow">4.7x</span></div><div class="row"><strong>Creative fatigue</strong><span>2 warnings</span></div><div class="row"><strong>Budget pacing</strong><span>61% used</span></div></div></article>
-        <article class="card mini" id="pr"><div class="card-header"><div><h2>PR Tracker</h2><p>Pitches in flight, placements landed, backlink confirmation.</p></div></div><div class="module-list"><div class="row"><strong>Beauty Independent</strong><span>Sent today</span></div><div class="row"><strong>Nurse.org</strong><span>Drafting angle</span></div><div class="row"><strong>Placements landed</strong><span>3</span></div><div class="row"><strong>Backlinks confirmed</strong><span>2 / 3</span></div></div></article>
+        <article class="card mini click-card" id="seo" onclick="location.href='/Injectors-Guide/dashboard/seo.html'"><div class="card-header"><div><h2>SEO Command</h2><p>Rankings, GSC movement, technical health, and content gaps.</p></div></div><div class="module-list"><div class="row"><strong>“injector certification Utah”</strong><span>Pos 4 · +2</span></div><div class="row"><strong>Striking distance</strong><span>19 keywords</span></div><div class="row"><strong>Technical health</strong><span class="status green">92%</span></div><div class="row"><strong>GSC clicks</strong><span class="sparkline"></span></div></div></article>
+        <article class="card mini click-card" id="paid" onclick="location.href='/Injectors-Guide/dashboard/paid-media.html'"><div class="card-header"><div><h2>Paid Media</h2><p>Meta + Google campaigns, fatigue warnings, and budget pacing.</p></div></div><div class="module-list"><div class="row"><strong>Meta Prospecting CBO</strong><span class="status green">5.9x</span></div><div class="row"><strong>Google Brand Search</strong><span class="status yellow">4.7x</span></div><div class="row"><strong>Creative fatigue</strong><span>2 warnings</span></div><div class="row"><strong>Budget pacing</strong><span>61% used</span></div></div></article>
+        <article class="card mini click-card" id="pr" onclick="location.href='/Injectors-Guide/dashboard/pr.html'"><div class="card-header"><div><h2>PR Tracker</h2><p>Pitches in flight, placements landed, backlink confirmation.</p></div></div><div class="module-list"><div class="row"><strong>Beauty Independent</strong><span>Sent today</span></div><div class="row"><strong>Nurse.org</strong><span>Drafting angle</span></div><div class="row"><strong>Placements landed</strong><span>3</span></div><div class="row"><strong>Backlinks confirmed</strong><span>2 / 3</span></div></div></article>
       </section>
 
       <section class="grid">
-        <article class="card" id="activity"><div class="card-header"><div><h2>Activity Log</h2><p>Append-only feed of autonomous work: action, why, expected impact, and result.</p></div></div><div class="activity-list"><div class="activity"><span class="time">2:14 PM</span><div><strong>COS-IG paused underperforming Google broad ad group.</strong><p>Why: 2.6x ROAS for 36h. Expected impact: protect $420/day from low-intent queries.</p></div></div><div class="activity"><span class="time">1:52 PM</span><div><strong>Generated 6 new Meta hooks from testimonial transcript.</strong><p>Why: current winner is nearing fatigue threshold. Result pending approval.</p></div></div><div class="activity"><span class="time">12:41 PM</span><div><strong>Queued SEO brief for striking-distance keyword.</strong><p>Why: position 11 with high commercial intent. Expected impact: +900 clicks/mo.</p></div></div></div></article>
-        <article class="card" id="deploy"><div class="card-header"><div><h2>Repo & Deploy</h2><p>Marketing-site commits, deploy health, PR previews, and Lighthouse.</p></div></div><div class="module-list"><div class="row"><strong>Latest commit</strong><span>dashboard shell</span></div><div class="row"><strong>Vercel deploy</strong><span class="status green">Ready</span></div><div class="row"><strong>Lighthouse</strong><span>96 / 100</span></div><div class="row"><strong>Open PRs</strong><span>1 preview</span></div><div class="row"><strong>Raw data</strong><button class="export">View</button></div></div></article>
+        <article class="card click-card" id="activity" onclick="location.href='/Injectors-Guide/dashboard/activity.html'"><div class="card-header"><div><h2>Activity Log</h2><p>Append-only feed of autonomous work: action, why, expected impact, and result.</p></div></div><div class="activity-list"><div class="activity"><span class="time">2:14 PM</span><div><strong>COS-IG paused underperforming Google broad ad group.</strong><p>Why: 2.6x ROAS for 36h. Expected impact: protect $420/day from low-intent queries.</p></div></div><div class="activity"><span class="time">1:52 PM</span><div><strong>Generated 6 new Meta hooks from testimonial transcript.</strong><p>Why: current winner is nearing fatigue threshold. Result pending approval.</p></div></div><div class="activity"><span class="time">12:41 PM</span><div><strong>Queued SEO brief for striking-distance keyword.</strong><p>Why: position 11 with high commercial intent. Expected impact: +900 clicks/mo.</p></div></div></div></article>
+        <article class="card click-card" id="deploy" onclick="location.href='/Injectors-Guide/dashboard/deploy.html'"><div class="card-header"><div><h2>Repo & Deploy</h2><p>Marketing-site commits, deploy health, PR previews, and Lighthouse.</p></div></div><div class="module-list"><div class="row"><strong>Latest commit</strong><span>dashboard shell</span></div><div class="row"><strong>Vercel deploy</strong><span class="status green">Ready</span></div><div class="row"><strong>Lighthouse</strong><span>96 / 100</span></div><div class="row"><strong>Open PRs</strong><span>1 preview</span></div><div class="row"><strong>Raw data</strong><button class="export">View</button></div></div></article>
       </section>
     </main>
   </div>
