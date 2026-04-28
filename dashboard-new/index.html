@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Injectors Guide COS-IG Dashboard</title>
+    <meta name="description" content="COS-IG command dashboard for Injectors Guide.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --background: #edf6ff;
+        --foreground: #0e1d34;
+        --card: rgba(255, 255, 255, 0.68);
+        --card-strong: rgba(255, 255, 255, 0.9);
+        --muted: rgba(14, 29, 52, 0.62);
+        --border: rgba(14, 29, 52, 0.11);
+        --primary: #0e1d34;
+        --blue: #2d6ef7;
+        --sky: #b9e8ff;
+        --cream: #eeece7;
+        --green: #2f9f6b;
+        --yellow: #c7972d;
+        --red: #d94b5d;
+        --radius: 18px;
+        --shadow: 0 24px 70px rgba(14, 29, 52, 0.13);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        min-width: 320px;
+        color: var(--foreground);
+        font-family: Inter, system-ui, sans-serif;
+        background:
+          radial-gradient(circle at 12% 8%, rgba(45, 110, 247, 0.34), transparent 34rem),
+          radial-gradient(circle at 88% 0%, rgba(185, 232, 255, 0.62), transparent 34rem),
+          radial-gradient(circle at 78% 82%, rgba(45, 110, 247, 0.16), transparent 32rem),
+          linear-gradient(135deg, #eef7ff 0%, var(--cream) 48%, #eaf4ff 100%);
+      }
+
+      body::before {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(14, 29, 52, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(14, 29, 52, 0.035) 1px, transparent 1px);
+        background-size: 64px 64px;
+        mask-image: radial-gradient(circle at 50% 12%, black, transparent 74%);
+      }
+
+      a { color: inherit; text-decoration: none; }
+      button, input, textarea { font: inherit; }
+      h1, h2, h3, p { margin-top: 0; }
+      .display { font-family: Newsreader, Georgia, serif; font-style: italic; font-weight: 500; letter-spacing: 0; }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 286px minmax(0, 1fr);
+        gap: 14px;
+        min-height: 100vh;
+        padding: 14px;
+      }
+
+      .sidebar, .card, .hero, .alert {
+        border: 1px solid rgba(255, 255, 255, 0.68);
+        background: var(--card);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(24px);
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        height: calc(100vh - 28px);
+        padding: 20px;
+        border-radius: 28px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .mark {
+        display: grid;
+        width: 48px;
+        height: 48px;
+        place-items: center;
+        border-radius: 16px;
+        background:
+          radial-gradient(circle at 25% 15%, rgba(185, 232, 255, 0.9), transparent 55%),
+          var(--primary);
+        color: #fff;
+        font-weight: 900;
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 30px;
+        line-height: 0.92;
+        color: var(--primary);
+      }
+
+      .brand span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .nav {
+        display: grid;
+        gap: 7px;
+      }
+
+      .nav button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 44px;
+        width: 100%;
+        padding: 0 13px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--muted);
+        cursor: pointer;
+        font-weight: 800;
+        text-align: left;
+      }
+
+      .nav button.active, .nav button:hover {
+        background: rgba(255, 255, 255, 0.78);
+        color: var(--primary);
+        box-shadow: 0 12px 28px rgba(14, 29, 52, 0.08);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        min-height: 24px;
+        padding: 4px 8px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.68);
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .pill.green { border-color: rgba(47, 159, 107, 0.24); background: rgba(47, 159, 107, 0.11); color: var(--green); }
+      .pill.yellow { border-color: rgba(199, 151, 45, 0.26); background: rgba(199, 151, 45, 0.12); color: #8a610c; }
+      .pill.red { border-color: rgba(217, 75, 93, 0.24); background: rgba(217, 75, 93, 0.11); color: var(--red); }
+      .pill.blue { border-color: rgba(45, 110, 247, 0.2); background: rgba(45, 110, 247, 0.1); color: var(--blue); }
+
+      .floor {
+        margin-top: auto;
+        padding: 17px;
+        border-radius: var(--radius);
+        background:
+          radial-gradient(circle at 80% 0%, rgba(185, 232, 255, 0.3), transparent 55%),
+          var(--primary);
+        color: #fff;
+      }
+
+      .floor small {
+        color: var(--sky);
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      .floor strong {
+        display: block;
+        margin: 5px 0;
+        font-size: 42px;
+        line-height: 0.9;
+      }
+
+      main {
+        display: grid;
+        gap: 14px;
+        min-width: 0;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        min-height: 360px;
+        padding: clamp(24px, 5vw, 52px);
+        border-radius: 28px;
+        background:
+          radial-gradient(circle at 15% 20%, rgba(185, 232, 255, 0.42), transparent 23rem),
+          radial-gradient(circle at 92% 0%, rgba(45, 110, 247, 0.45), transparent 28rem),
+          linear-gradient(135deg, #0e1d34, #18395f 52%, #2d6ef7);
+        color: #fff;
+      }
+
+      .hero-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 330px;
+        gap: 28px;
+        align-items: end;
+      }
+
+      .hero h1 {
+        max-width: 900px;
+        margin-bottom: 18px;
+        font-size: clamp(52px, 7vw, 104px);
+        line-height: 0.88;
+      }
+
+      .hero p {
+        max-width: 780px;
+        margin-bottom: 0;
+        color: rgba(255, 255, 255, 0.78);
+        line-height: 1.7;
+      }
+
+      .hero-card {
+        padding: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .kicker {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 22px;
+        color: var(--sky);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 0 8px rgba(47, 159, 107, 0.18);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .span-12 { grid-column: span 12; }
+      .span-8 { grid-column: span 8; }
+      .span-6 { grid-column: span 6; }
+      .span-4 { grid-column: span 4; }
+
+      .card {
+        border-radius: 24px;
+        overflow: hidden;
+      }
+
+      .card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 21px 22px 0;
+      }
+
+      .card h2 {
+        margin-bottom: 4px;
+        font-size: 36px;
+        line-height: 0.95;
+      }
+
+      .card p, .muted {
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .card-body {
+        display: grid;
+        gap: 12px;
+        padding: 18px 22px 22px;
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(140px, 1fr));
+        gap: 12px;
+      }
+
+      .metric {
+        min-height: 128px;
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.62);
+      }
+
+      .metric label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .metric strong {
+        display: block;
+        margin: 16px 0 8px;
+        font-size: 34px;
+        line-height: 0.95;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      th, td {
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border);
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      tr:last-child td { border-bottom: 0; }
+
+      .stack { display: grid; gap: 10px; }
+      .item {
+        padding: 14px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.68);
+      }
+
+      .item-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .item strong { display: block; line-height: 1.25; }
+      .item p { margin: 8px 0 0; font-size: 13px; }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 12px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 36px;
+        padding: 0 12px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        color: var(--primary);
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 900;
+      }
+
+      .btn.primary {
+        border-color: transparent;
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .alert {
+        display: grid;
+        gap: 12px;
+        padding: 16px;
+        border-radius: 20px;
+        box-shadow: 0 16px 40px rgba(14, 29, 52, 0.08);
+      }
+
+      .alert.red { border-color: rgba(217, 75, 93, 0.28); background: rgba(255, 255, 255, 0.72); }
+      .alert.yellow { border-color: rgba(199, 151, 45, 0.28); background: rgba(255, 255, 255, 0.72); }
+      .alert.green { border-color: rgba(47, 159, 107, 0.25); background: rgba(255, 255, 255, 0.72); }
+
+      .chat-box {
+        display: grid;
+        min-height: 530px;
+        grid-template-rows: 1fr auto;
+        overflow: hidden;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        background: rgba(255, 255, 255, 0.62);
+      }
+
+      .chat-thread {
+        display: grid;
+        align-content: start;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .message {
+        max-width: 78%;
+        padding: 12px 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0 10px 22px rgba(14, 29, 52, 0.06);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .message.user {
+        justify-self: end;
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .composer {
+        display: flex;
+        gap: 9px;
+        padding: 12px;
+        border-top: 1px solid var(--border);
+      }
+
+      .composer input, textarea {
+        width: 100%;
+        min-height: 42px;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 0 14px;
+        color: var(--foreground);
+        outline: none;
+      }
+
+      textarea {
+        min-height: 92px;
+        padding: 12px 14px;
+        border-radius: 16px;
+        resize: vertical;
+      }
+
+      .section { display: none; }
+      .section.active { display: grid; gap: 14px; }
+
+      .toast {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        display: none;
+        padding: 12px 14px;
+        border-radius: 999px;
+        background: var(--primary);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 900;
+        box-shadow: 0 18px 44px rgba(14, 29, 52, 0.22);
+      }
+
+      .toast.show { display: block; }
+
+      @media (max-width: 1180px) {
+        .shell { grid-template-columns: 1fr; }
+        .sidebar { position: relative; top: 0; height: auto; }
+        .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .floor { display: none; }
+        .hero-grid { grid-template-columns: 1fr; }
+        .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .span-8, .span-6, .span-4 { grid-column: span 12; }
+      }
+
+      @media (max-width: 720px) {
+        .shell { padding: 9px; }
+        .hero { min-height: auto; padding: 24px; }
+        .hero h1 { font-size: clamp(48px, 16vw, 70px); }
+        .metrics { grid-template-columns: 1fr; }
+        .nav { grid-template-columns: 1fr; }
+        .card-head { flex-direction: column; }
+        .message { max-width: 100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <a class="brand" href="#overview" data-tab="overview" aria-label="Injectors Guide dashboard home">
+          <span class="mark">IG</span>
+          <span>
+            <strong class="display">Injectors Guide</strong>
+            <span>COS-IG Command</span>
+          </span>
+        </a>
+
+        <nav class="nav" aria-label="Dashboard tabs">
+          <button class="active" data-tab="overview">Overview <span class="pill blue">Live</span></button>
+          <button data-tab="chat">AI Chat <span class="pill yellow">Backend</span></button>
+          <button data-tab="alerts">Alerts <span class="pill red">3</span></button>
+          <button data-tab="suggestions">Feature Upgrade Suggestions <span class="pill blue">Daily</span></button>
+          <button data-tab="admin">Admin <span class="pill yellow">Locked</span></button>
+          <button data-tab="blockers">Blockers <span class="pill red">4</span></button>
+        </nav>
+
+        <section class="floor">
+          <small>Operating Floor</small>
+          <strong class="display">5.0x</strong>
+          <p>Every paid channel must meet or beat the ROAS floor before scale.</p>
+        </section>
+      </aside>
+
+      <main>
+        <section class="hero">
+          <div class="hero-grid">
+            <div>
+              <div class="kicker"><span class="dot"></span> GitHub Pages Preview</div>
+              <h1 class="display">Autonomous growth command for Injectors Guide.</h1>
+              <p>
+                A shadcn-inspired dashboard surface for COS-IG: attribution, blockers,
+                alerts, admin controls, daily feature suggestions, and the future AI chat layer.
+              </p>
+            </div>
+            <div class="hero-card">
+              <span class="pill green">Static page ready</span>
+              <h2 class="display" style="margin: 14px 0 8px; font-size: 38px;">/dashboard-new</h2>
+              <p>Designed for GitHub Pages now. Real AI chat, admin auth, and data writes will need a backend.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="overview" class="section active">
+          <div class="metrics">
+            <article class="metric"><label>Revenue <span class="pill red">Blocked</span></label><strong class="display">Pending</strong><small class="muted">Stripe key required</small></article>
+            <article class="metric"><label>Spend <span class="pill red">Blocked</span></label><strong class="display">Pending</strong><small class="muted">Meta and Google access required</small></article>
+            <article class="metric"><label>ROAS Floor <span class="pill green">Set</span></label><strong class="display">5.0x</strong><small class="muted">Scaling rule</small></article>
+            <article class="metric"><label>Decisions <span class="pill yellow">Open</span></label><strong class="display">4</strong><small class="muted">Founder review queue</small></article>
+            <article class="metric"><label>Automations <span class="pill blue">Proposed</span></label><strong class="display">8</strong><small class="muted">Daily and weekly agents</small></article>
+            <article class="metric"><label>Deploy <span class="pill green">Pages</span></label><strong class="display">Ready</strong><small class="muted">Static route</small></article>
+          </div>
+
+          <div class="grid">
+            <article class="card span-8">
+              <div class="card-head">
+                <div>
+                  <h2 class="display">Attribution</h2>
+                  <p>Foundation state until live data credentials are connected.</p>
+                </div>
+                <span class="pill yellow">Unreconciled</span>
+              </div>
+              <div class="card-body">
+                <table>
+                  <thead><tr><th>Channel</th><th>Spend</th><th>Revenue</th><th>ROAS</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>Meta</td><td>Pending</td><td>Pending</td><td>Pending</td><td><span class="pill red">Blocked</span></td></tr>
+                    <tr><td>Google</td><td>$0</td><td>$0</td><td>N/A</td><td><span class="pill yellow">Queued</span></td></tr>
+                    <tr><td>SEO</td><td>N/A</td><td>Pending</td><td>Pending</td><td><span class="pill yellow">Queued</span></td></tr>
+                    <tr><td>Email</td><td>Pending</td><td>Pending</td><td>Pending</td><td><span class="pill red">Blocked</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </article>
+
+            <article class="card span-4">
+              <div class="card-head">
+                <div>
+                  <h2 class="display">Decisions</h2>
+                  <p>Highest-leverage founder inputs.</p>
+                </div>
+              </div>
+              <div class="card-body stack">
+                <div class="item"><div class="item-top"><strong>Connect GitHub write access</strong><span class="pill red">Blocker</span></div><p>Needed so COS-IG can branch, PR, and ship without manual copy/paste.</p></div>
+                <div class="item"><div class="item-top"><strong>Choose backend for AI chat</strong><span class="pill yellow">Decision</span></div><p>Recommended: Vercel + OpenAI API + admin auth.</p></div>
+                <div class="item"><div class="item-top"><strong>Confirm ESP</strong><span class="pill yellow">Decision</span></div><p>Klaviyo or ConvertKit for lifecycle automation.</p></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="chat" class="section">
+          <article class="card span-12">
+            <div class="card-head">
+              <div>
+                <h2 class="display">AI Chat</h2>
+                <p>Future direct dashboard connection to COS-IG.</p>
+              </div>
+              <span class="pill yellow">Backend required</span>
+            </div>
+            <div class="card-body">
+              <div class="chat-box">
+                <div class="chat-thread" id="chatThread">
+                  <div class="message">
+                    <strong>COS-IG</strong><br>
+                    I am staged in the dashboard UI. To make this truly interactive, connect a secure backend route to OpenAI/Codex with admin auth, rate limits, logging, and tool permissions.
+                  </div>
+                  <div class="message">
+                    <strong>Recommended architecture</strong><br>
+                    GitHub Pages can host this UI, but cannot safely hold API secrets. Use Vercel, Cloudflare Workers, or Supabase Edge Functions for the chat route.
+                  </div>
+                </div>
+                <form class="composer" id="chatForm">
+                  <input id="chatInput" placeholder="Ask COS-IG something..." autocomplete="off">
+                  <button class="btn primary" type="submit">Send</button>
+                </form>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="alerts" class="section">
+          <div class="grid">
+            <article class="card span-6">
+              <div class="card-head"><div><h2 class="display">Alerts & Notifications</h2><p>Actionable watchlist for the founder and COS-IG.</p></div></div>
+              <div class="card-body">
+                <div class="alert red"><strong>Critical: Integration blockers still open</strong><span class="muted">Stripe, Meta, Google, GA4, GSC, Vercel token, and GitHub write access remain needed.</span></div>
+                <div class="alert yellow"><strong>Architecture: GitHub Pages is UI-only</strong><span class="muted">AI chat and admin-only data need a secure backend.</span></div>
+                <div class="alert green"><strong>Design: /dashboard-new is ready for Pages</strong><span class="muted">Static page can deploy immediately from the repo.</span></div>
+              </div>
+            </article>
+
+            <article class="card span-6">
+              <div class="card-head"><div><h2 class="display">Notification Rules</h2><p>Proposed triggers once data is connected.</p></div></div>
+              <div class="card-body stack">
+                <div class="item"><strong>ROAS breach</strong><p>Alert if any paid campaign is below 3x for 48 hours.</p></div>
+                <div class="item"><strong>Spend anomaly</strong><p>Alert if hourly spend exceeds 2x rolling average.</p></div>
+                <div class="item"><strong>Approval stale</strong><p>Alert if a founder decision is open for more than 48 hours.</p></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="suggestions" class="section">
+          <article class="card">
+            <div class="card-head">
+              <div>
+                <h2 class="display">Feature Upgrade Suggestions</h2>
+                <p>Daily COS-IG recommendations to make the dashboard more useful, more autonomous, and more beautiful.</p>
+              </div>
+              <span class="pill blue">Automation candidate</span>
+            </div>
+            <div class="card-body stack" id="suggestionList">
+              <div class="item">
+                <div class="item-top"><strong>Connect dashboard chat to a secure COS-IG backend</strong><span class="pill red">High leverage</span></div>
+                <p>Impact: lets Traci talk to the AI chief of staff from inside the command center.</p>
+                <div class="actions"><button class="btn primary decision">Approve</button><button class="btn decision">Deny</button></div>
+              </div>
+              <div class="item">
+                <div class="item-top"><strong>Add blocker health score</strong><span class="pill yellow">Fast win</span></div>
+                <p>Impact: turns blockers into a visible executive priority list with owner and due date.</p>
+                <div class="actions"><button class="btn primary decision">Approve</button><button class="btn decision">Deny</button></div>
+              </div>
+              <div class="item">
+                <div class="item-top"><strong>Add mobile bottom navigation</strong><span class="pill blue">UX</span></div>
+                <p>Impact: makes the dashboard easier to use from a phone during founder check-ins.</p>
+                <div class="actions"><button class="btn primary decision">Approve</button><button class="btn decision">Deny</button></div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section id="admin" class="section">
+          <div class="grid">
+            <article class="card span-6">
+              <div class="card-head"><div><h2 class="display">Admin Console</h2><p>Visible UI now. Real access control requires auth.</p></div><span class="pill yellow">Locked</span></div>
+              <div class="card-body stack">
+                <div class="item"><strong>Allowed admins</strong><p>Traci Andreason and approved team members.</p></div>
+                <div class="item"><strong>Auth recommendation</strong><p>Use Vercel auth, Clerk, Supabase Auth, or Google Workspace SSO.</p></div>
+                <div class="item"><strong>Protected data</strong><p>API tokens, revenue, ad spend, student data, and approval actions.</p></div>
+              </div>
+            </article>
+            <article class="card span-6">
+              <div class="card-head"><div><h2 class="display">Org Chart</h2><p>Future autonomous team map.</p></div></div>
+              <div class="card-body stack">
+                <div class="item"><strong>COS-IG</strong><p>Chief of Staff and orchestration layer.</p></div>
+                <div class="item"><strong>Media Buyer Agent</strong><p>Meta/Google monitoring, fatigue, budget pacing.</p></div>
+                <div class="item"><strong>Content Chief Agent</strong><p>SEO, YouTube, short-form, and email calendar.</p></div>
+                <div class="item"><strong>PR Agent</strong><p>Journalist monitoring, pitches, backlinks, placements.</p></div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="blockers" class="section">
+          <article class="card">
+            <div class="card-head">
+              <div>
+                <h2 class="display">Current Blockers</h2>
+                <p>This mirrors the workspace blocker system. Ask: "What are your blockers?"</p>
+              </div>
+              <span class="pill red">Keep updated</span>
+            </div>
+            <div class="card-body stack">
+              <div class="item"><div class="item-top"><strong>GitHub write access</strong><span class="pill red">Needed</span></div><p>Create branches, commits, and PRs from COS-IG.</p></div>
+              <div class="item"><div class="item-top"><strong>Vercel token/login</strong><span class="pill red">Needed</span></div><p>Preview deploys and backend routes for chat/admin/API.</p></div>
+              <div class="item"><div class="item-top"><strong>Ad and analytics credentials</strong><span class="pill red">Needed</span></div><p>Meta, Google Ads, GA4, GSC, and Stripe for attribution.</p></div>
+              <div class="item"><div class="item-top"><strong>Backend decision for AI chat</strong><span class="pill yellow">Decision</span></div><p>GitHub Pages alone cannot securely connect to AI APIs.</p></div>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast">Saved</div>
+
+    <script>
+      const tabs = document.querySelectorAll("[data-tab]");
+      const sections = document.querySelectorAll(".section");
+      const toast = document.getElementById("toast");
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 1900);
+      }
+
+      function setTab(id) {
+        document.querySelectorAll(".nav button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.tab === id);
+        });
+        sections.forEach((section) => section.classList.toggle("active", section.id === id));
+        if (location.hash !== "#" + id) history.replaceState(null, "", "#" + id);
+      }
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", (event) => {
+          const id = event.currentTarget.dataset.tab;
+          if (id) setTab(id);
+        });
+      });
+
+      const initial = location.hash.replace("#", "");
+      if (initial && document.getElementById(initial)) setTab(initial);
+
+      document.querySelectorAll(".decision").forEach((button) => {
+        button.addEventListener("click", () => {
+          const action = button.textContent.trim();
+          const item = button.closest(".item");
+          const title = item.querySelector("strong").textContent;
+          item.style.opacity = "0.58";
+          showToast(action + ": " + title);
+        });
+      });
+
+      document.getElementById("chatForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const input = document.getElementById("chatInput");
+        const value = input.value.trim();
+        if (!value) return;
+        const thread = document.getElementById("chatThread");
+        thread.insertAdjacentHTML("beforeend", '<div class="message user">' + value.replace(/</g, "&lt;") + '</div><div class="message"><strong>COS-IG</strong><br>This static GitHub Pages version cannot call the AI backend yet. Next step: deploy a secure chat API on Vercel or another backend and route this message there.</div>');
+        input.value = "";
+        showToast("Chat backend required");
+      });
+    </script>
+  </body>
+</html>
