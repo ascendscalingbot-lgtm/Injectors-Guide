@@ -397,13 +397,13 @@
       </div>
       <nav class="nav">
         <a href="/Injectors-Guide/dashboard/"><span class="left"><span class="ico">✦</span> Overview</span></a>
-        <a href="/Injectors-Guide/dashboard/ai-chat.html"><span class="left"><span class="ico">✧</span> AI Chat</span></a>
+        <a class="active" href="/Injectors-Guide/dashboard/ai-chat.html"><span class="left"><span class="ico">✧</span> AI Chat</span></a>
         <a href="/Injectors-Guide/dashboard/attribution.html"><span class="left"><span class="ico">◒</span> Attribution</span></a>
         <a href="/Injectors-Guide/dashboard/pipeline.html"><span class="left"><span class="ico">▦</span> Content Pipeline</span></a>
         <a href="/Injectors-Guide/dashboard/seo.html"><span class="left"><span class="ico">⌁</span> SEO Command</span></a>
         <a href="/Injectors-Guide/dashboard/paid-media.html"><span class="left"><span class="ico">◎</span> Paid Media</span></a>
         <a href="/Injectors-Guide/dashboard/pr.html"><span class="left"><span class="ico">✉</span> PR Tracker</span></a>
-        <a class="active" href="/Injectors-Guide/dashboard/decisions.html"><span class="left"><span class="ico">!</span> Decisions Needed</span><span class="badge">7</span></a>
+        <a href="/Injectors-Guide/dashboard/decisions.html"><span class="left"><span class="ico">!</span> Decisions Needed</span><span class="badge">7</span></a>
         <a href="/Injectors-Guide/dashboard/activity.html"><span class="left"><span class="ico">↻</span> Activity Log</span></a>
         <a href="/Injectors-Guide/dashboard/deploy.html"><span class="left"><span class="ico">⌘</span> Repo & Deploy</span></a>
       </nav>
@@ -420,12 +420,46 @@
     <main class="main">
       <header class="topbar">
         <div>
-          <p class="title-kicker">Approvals before spend, publish, claims, or PR</p>
-          <h1>Decisions Needed</h1>
+          <p class="title-kicker">AI Chief of Staff · Connected to business data</p>
+          <h1>AI Chat</h1>
         </div>
         <div class="ops-pill"><span></span> All Systems Operational</div>
       </header>
-      <section class="card"><div class="card-header"><div><h2>Approval Queue</h2><p>Each item includes preview, risk notes, expected impact, and approve/edit/reject actions.</p></div></div><div class="decision-list"><div class="decision"><div class="decision-top"><strong>Approve Meta creative batch #14</strong><span class="status green">Ad</span></div><p>3 testimonial angles using career autonomy hook. Clinical claims verified.</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div><div class="decision"><div class="decision-top"><strong>Budget lift: Meta prospecting +18%</strong><span class="status yellow">Budget</span></div><p>Agent recommends increase after 5.9x ROAS for 72h. Requires approval over 15%.</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div><div class="decision"><div class="decision-top"><strong>PR pitch: “From ER burnout to aesthetics”</strong><span class="status red">Claims</span></div><p>Needs Traci review before outreach to nursing publications.</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div></div></section>
+
+      <section class="chat-shell">
+        <article class="card chat-window">
+          <div class="card-header">
+            <div>
+              <h2>Ask Injectors Guide anything</h2>
+              <p>Query revenue, attribution, ads, content, SEO, PR, approvals, and activity from the AI Chief of Staff workspace.</p>
+            </div>
+          </div>
+          <div class="chat-thread">
+            <div class="message ai"><small>COS-IG</small>Good evening, Traci. I can answer questions across Stripe revenue, Meta and Google Ads, SEO, content pipeline, PR, approvals, and deploy status. What do you want to inspect first?</div>
+            <div class="message user"><small>You</small>Are we on track to hit 5x ROAS this month?</div>
+            <div class="message ai"><small>COS-IG</small>Yes. Blended paid ROAS is currently 5.4x month-to-date. Meta is carrying at 5.7x, Google is slightly below target at 4.8x, and I’m watching the Brand Search campaign because it has been under 5x for 29 hours.</div>
+            <div class="message ai"><small>COS-IG</small>Recommended next action: approve the Meta prospecting +12–18% budget lift only if Google remains stable through the next reconciliation window.</div>
+          </div>
+          <form class="chat-composer" onsubmit="event.preventDefault();">
+            <input aria-label="Ask the AI Chief of Staff" placeholder="Ask about ROAS, content, SEO, approvals, or revenue…" />
+            <button type="submit">Send</button>
+          </form>
+        </article>
+
+        <aside class="card">
+          <div class="card-header"><div><h2>Suggested Questions</h2><p>Fast prompts for Traci and the AI Chief of Staff.</p></div></div>
+          <div class="module-list">
+            <button class="prompt-chip">What changed in revenue today?</button>
+            <button class="prompt-chip">Which campaign needs budget moved?</button>
+            <button class="prompt-chip">What approvals are blocking growth?</button>
+            <button class="prompt-chip">What should we publish this week?</button>
+            <button class="prompt-chip">Summarize agent actions from today.</button>
+            <div class="row"><strong>Data sources</strong><span>Stripe · Meta · Google · GSC</span></div>
+            <div class="row"><strong>Freshness</strong><span class="status green">Synced 2m ago</span></div>
+            <div class="row"><strong>Mode</strong><span>Read + recommend</span></div>
+          </div>
+        </aside>
+      </section>
     </main>
   </div>
 </body>
