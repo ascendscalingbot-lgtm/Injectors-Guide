@@ -61,7 +61,7 @@
       z-index: 1;
       display: grid;
       grid-template-columns: 278px minmax(0, 1fr);
-      gap: 18px;
+      gap: 14px;
       min-height: 100vh;
       padding: 18px;
     }
@@ -176,31 +176,33 @@
     .agent-card strong { position: relative; display: block; margin-top: 7px; font-family: "Newsreader", serif; font-size: 24px; font-style: italic; font-weight: 500; }
     .agent-card p { position: relative; margin: 8px 0 0; color: rgba(255,255,255,0.72); font-size: 12px; line-height: 1.45; }
     .profile-card { display: flex; align-items: center; gap: 13px; }
-    .profile-card strong { margin-top: 4px; font-size: 17px; line-height: 1; white-space: nowrap; }
+    .profile-card strong { margin-top: 4px; font-size: 16px; line-height: 1; white-space: nowrap; }
     .profile-card p { margin-top: 4px; }
     .profile-avatar { position: relative; width: 54px; height: 54px; flex: 0 0 54px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #ffffff, var(--aqua)); color: var(--ink); font-weight: 800; box-shadow: 0 14px 32px rgba(0,0,0,0.18); }
 
-    .main { min-width: 0; display: grid; gap: 18px; }
+    .main { min-width: 0; display: grid; gap: 12px; }
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      padding: 10px 12px 10px 18px;
+      gap: 10px;
+      padding: 5px 9px 5px 14px;
       border: 1px solid rgba(255,255,255,0.68);
-      border-radius: var(--radius-xl);
+      border-radius: 12px;
       background: rgba(255,255,255,0.58);
-      box-shadow: 0 16px 45px rgba(14,29,52,0.08);
+      box-shadow: 0 10px 26px rgba(14,29,52,0.06);
       backdrop-filter: blur(22px);
+      min-height: 54px;
+      box-sizing: border-box;
     }
-    .title-kicker { margin: 7px 0 0; color: rgba(14,29,52,0.52); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; text-align: right; }
+    .title-kicker { margin: 1px 0 0; color: rgba(14,29,52,0.52); font-size: 9px; line-height: 1; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; text-align: right; }
     h1, h2, h3 { margin: 0; }
     h1 {
       font-family: "Newsreader", serif;
-      font-size: clamp(32px, 3vw, 46px);
+      font-size: clamp(25px, 2.25vw, 34px);
       font-style: italic;
-      line-height: 1;
-      letter-spacing: -1.8px;
+      line-height: 0.92;
+      letter-spacing: -1.5px;
       font-weight: 400;
     }
     h1 .script-word { font-family: "Imperial Script", cursive; color: var(--blue); font-size: 1.05em; font-style: normal; letter-spacing: 0; }
@@ -208,11 +210,12 @@
     .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--blue), var(--aqua)); display: grid; place-items: center; color: white; font-weight: 700; box-shadow: 0 10px 20px rgba(45,110,247,0.25); }
     .user-menu strong { display: block; font-size: 13px; }
     .user-menu span { display: block; font-size: 11px; color: var(--muted); }
-    .ops-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: rgba(255,255,255,0.66); border: 1px solid rgba(14,29,52,0.08); color: var(--ink); font-size: 12px; font-weight: 700; white-space: nowrap; box-shadow: 0 12px 28px rgba(14,29,52,0.08); }
-    .topbar-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .ops-pill { display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,0.66); border: 1px solid rgba(14,29,52,0.08); color: var(--ink); font-size: 11px; font-weight: 700; white-space: nowrap; box-shadow: 0 12px 28px rgba(14,29,52,0.08); }
+    .topbar-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
     .top-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
-    .action-btn { border: 0; border-radius: 999px; background: var(--ink); color: #fff; font: inherit; font-size: 12px; font-weight: 800; min-height: 34px; padding: 0 13px; cursor: pointer; box-shadow: 0 12px 28px rgba(14,29,52,0.12); }
+    .action-btn { border: 0; border-radius: 999px; background: var(--ink); color: #fff; font: inherit; font-size: 12px; font-weight: 800; min-height: 30px; padding: 0 12px; cursor: pointer; box-shadow: 0 12px 28px rgba(14,29,52,0.12); }
     .ghost-btn { background: rgba(255,255,255,0.68); color: var(--ink); border: 1px solid rgba(14,29,52,0.08); }
+    .source-pill { color: rgba(14,29,52,0.48); font-size: 9px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; text-align: right; }
     .ops-pill span { width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 0 rgba(47,159,107,0.5); animation: pulseDot 1.4s infinite; }
     @keyframes pulseDot { 70% { box-shadow: 0 0 0 9px rgba(47,159,107,0); } 100% { box-shadow: 0 0 0 0 rgba(47,159,107,0); } }
 
@@ -222,7 +225,7 @@
       justify-content: space-between;
       gap: 16px;
       padding: 13px 16px;
-      border-radius: 22px;
+      border-radius: 16px;
       background: linear-gradient(90deg, rgba(217,75,93,0.14), rgba(255,255,255,0.54));
       border: 1px solid rgba(217,75,93,0.22);
       color: #8c2635;
@@ -265,9 +268,9 @@
     .grid { display: grid; grid-template-columns: 1.35fr 0.95fr; gap: 18px; align-items: start; }
     .card {
       border: 1px solid rgba(255,255,255,0.68);
-      border-radius: var(--radius-xl);
+      border-radius: 16px;
       background: rgba(255,255,255,0.58);
-      box-shadow: 0 16px 45px rgba(14,29,52,0.08);
+      box-shadow: 0 10px 26px rgba(14,29,52,0.06);
       backdrop-filter: blur(22px);
       overflow: hidden;
     }
@@ -333,7 +336,7 @@
       overflow-x: auto;
       padding-bottom: 24px;
     }
-    .lane { min-height: 255px; padding: 12px; border-radius: 22px; background: rgba(14,29,52,0.045); }
+    .lane { min-height: 255px; padding: 12px; border-radius: 16px; background: rgba(14,29,52,0.045); }
     .lane h3 { margin-bottom: 10px; font-size: 11px; color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase; }
     .task { padding: 12px; border-radius: 17px; background: rgba(255,255,255,0.76); border: 1px solid rgba(14,29,52,0.06); box-shadow: 0 10px 22px rgba(14,29,52,0.06); }
     .task + .task { margin-top: 9px; }
@@ -355,7 +358,7 @@
     .chat-shell { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 18px; align-items: stretch; }
     .chat-window { min-height: 680px; display: flex; flex-direction: column; }
     .chat-thread { flex: 1; padding: 22px; display: grid; align-content: start; gap: 14px; }
-    .message { max-width: 78%; padding: 14px 16px; border-radius: 22px; font-size: 14px; line-height: 1.55; box-shadow: 0 12px 28px rgba(14,29,52,0.07); }
+    .message { max-width: 78%; padding: 14px 16px; border-radius: 16px; font-size: 14px; line-height: 1.55; box-shadow: 0 12px 28px rgba(14,29,52,0.07); }
     .message.ai { background: rgba(255,255,255,0.72); border: 1px solid rgba(14,29,52,0.06); }
     .message.user { justify-self: end; background: var(--ink); color: white; }
     .message small { display: block; margin-bottom: 6px; font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; font-weight: 800; opacity: .58; }
@@ -377,10 +380,12 @@
 
     .modal-backdrop { position: fixed; inset: 0; z-index: 80; display: none; place-items: center; padding: 18px; background: rgba(14,29,52,0.38); backdrop-filter: blur(10px); }
     .modal-backdrop.open { display: grid; }
-    .modal { width: min(560px, 100%); border-radius: 28px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 30px 90px rgba(14,29,52,0.24); padding: 22px; }
+    .modal { width: min(560px, 100%); border-radius: 20px; background: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 30px 90px rgba(14,29,52,0.24); padding: 22px; }
     .modal h2 { font-family: "Newsreader", serif; font-style: italic; font-size: 32px; line-height: 1; margin: 0 0 8px; }
     .modal p { margin: 0 0 16px; color: var(--muted); font-size: 13px; line-height: 1.5; }
-    .modal form { display: grid; gap: 10px; }
+    .modal form { display: grid; gap: 11px; }
+    .modal label { display: grid; gap: 6px; color: var(--muted); font-size: 11px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; }
+    .modal label span { padding-left: 3px; }
     .modal input, .modal textarea, .modal select { width: 100%; border: 1px solid rgba(14,29,52,0.1); border-radius: 16px; background: rgba(255,255,255,0.78); padding: 12px 13px; color: var(--ink); font: inherit; outline: none; }
     .modal textarea { min-height: 92px; resize: vertical; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 8px; }
@@ -393,7 +398,8 @@
 
     @media (max-width: 720px) {
       .shell { padding: 10px; gap: 12px; }
-      .sidebar, .topbar, .card { border-radius: 26px; }
+      .sidebar, .card { border-radius: 26px; }
+      .topbar { border-radius: 12px; }
       .topbar { align-items: flex-start; flex-direction: column; }
       .user-menu { width: 100%; }
       .nav { grid-template-columns: 1fr; }
@@ -439,8 +445,8 @@
           <h1>Activity Log</h1>
         </div>
         <div class="topbar-right">
-          <div class="top-actions"><div class="ops-pill"><span></span> All Systems Operational</div><button class="action-btn" data-modal="create">Log Action</button></div>
-          <p class="title-kicker">Append-only autonomous work feed</p>
+          <div class="top-actions"><div class="ops-pill"><span></span> All Systems Operational</div><button class="action-btn" data-modal="create" data-kind="activity log entry">Log Activity</button></div>
+          <p class="title-kicker source-pill">Append-only autonomous work feed</p>
         </div>
       </header>
       <section class="card"><div class="card-header"><div><h2>Agent Actions</h2><p>Every action includes timestamp, reason, expected impact, and actual result when known.</p></div><div class="segmented"><button class="active">All</button><button>Ads</button><button>SEO</button><button>PR</button></div></div><div class="activity-list"><div class="activity"><span class="time">2:14 PM</span><div><strong>COS-IG paused underperforming Google broad ad group.</strong><p>Why: 2.6x ROAS for 36h. Expected impact: protect $420/day from low-intent queries.</p></div></div><div class="activity"><span class="time">1:52 PM</span><div><strong>Generated 6 new Meta hooks from testimonial transcript.</strong><p>Why: current winner is nearing fatigue threshold. Result pending approval.</p></div></div><div class="activity"><span class="time">12:41 PM</span><div><strong>Queued SEO brief for striking-distance keyword.</strong><p>Why: position 11 with high commercial intent. Expected impact: +900 clicks/mo.</p></div></div></div></section>
@@ -449,29 +455,61 @@
 
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
-      <h2>Create Item</h2>
-      <p>Add a new dashboard object. In production this will write to the connected database/API queue.</p>
-      <form id="modalForm">
-        <input placeholder="Title" required>
-        <select><option>Contact</option><option>Decision</option><option>Campaign</option><option>Content Card</option><option>PR Pitch</option><option>Activity</option></select>
-        <textarea placeholder="Notes, context, owner, or next action"></textarea>
-        <div class="modal-actions"><button type="button" class="action-btn ghost-btn" data-close>Cancel</button><button type="submit" class="action-btn">Create</button></div>
+      <h2 id="modalTitle">Log Activity</h2>
+      <p id="modalCopy">Create a focused activity log entry. It updates this page immediately and is structured for Supabase persistence.</p>
+      <form id="modalForm" data-kind="activity log entry">
+        <label><span>Title</span><input name="title" placeholder="Activity title" required></label>
+        <label><span>Owner / source</span><input name="meta" placeholder="Owner / source"></label>
+        <label><span>Status</span><select name="stage"><option>Idea</option><option>Draft</option><option>Review</option><option>Approved</option><option>Rejected</option><option>Published</option></select></label>
+        <label><span>Notes</span><textarea name="notes" placeholder="Context, next action, owner, or approval notes"></textarea></label>
+        <div class="modal-actions"><button type="button" class="action-btn ghost-btn" data-close>Cancel</button><button type="submit" class="action-btn">Save</button></div>
       </form>
     </div>
   </div>
   <div class="toast" id="toast">Saved to dashboard queue</div>
   <script>
+    const SUPABASE_URL = 'https://cmtvqqfofegbzzfmrvbv.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtdHZxcWZvZmVnYnp6Zm1ydmJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4MzIwMzUsImV4cCI6MjA4NTQwODAzNX0.cEEUBEFnew06U8CtL0eB1hs1kAGN5Frmie1fybX1Dzc';
+    const DATA_SLUG = 'injectors-guide/dashboard-data';
     const modal = document.getElementById('modalBackdrop');
     const toast = document.getElementById('toast');
-    document.querySelectorAll('[data-modal]').forEach(btn => btn.addEventListener('click', () => modal?.classList.add('open')));
+    const modalTitle = document.getElementById('modalTitle');
+    const modalForm = document.getElementById('modalForm');
+    const firstInput = modalForm?.querySelector('input[name="title"]');
+    function showToast(text) { if (!toast) return; toast.textContent = text; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200); }
+    function openModal(kind = 'item', title = '') { if (modalTitle && title) modalTitle.textContent = title; modalForm?.setAttribute('data-kind', kind); modal?.classList.add('open'); }
+    document.querySelectorAll('[data-modal]').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.kind || 'item')));
     document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => modal?.classList.remove('open')));
     modal?.addEventListener('click', (event) => { if (event.target === modal) modal.classList.remove('open'); });
-    document.getElementById('modalForm')?.addEventListener('submit', (event) => { event.preventDefault(); modal?.classList.remove('open'); toast?.classList.add('show'); setTimeout(() => toast?.classList.remove('show'), 2200); });
-    document.querySelectorAll('.actions .approve').forEach(btn => btn.addEventListener('click', (event) => { event.stopPropagation(); btn.textContent = 'Approved'; btn.closest('.decision')?.querySelector('.status')?.classList.add('green'); toast.textContent='Decision approved'; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1800); }));
-    document.querySelectorAll('.actions button:not(.approve)').forEach(btn => btn.addEventListener('click', (event) => { event.stopPropagation(); toast.textContent = btn.textContent + ' mode opened'; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1800); }));
-    document.querySelectorAll('.task').forEach(task => { task.draggable = true; task.addEventListener('dragstart', () => task.classList.add('dragging')); task.addEventListener('dragend', () => task.classList.remove('dragging')); });
-    document.querySelectorAll('.lane').forEach(lane => lane.addEventListener('dragover', (event) => { event.preventDefault(); const task = document.querySelector('.task.dragging'); if (task) lane.appendChild(task); }));
-    document.querySelector('.chat-composer')?.addEventListener('submit', (event) => { event.preventDefault(); const input = event.currentTarget.querySelector('input'); if (!input?.value.trim()) return; const thread = document.querySelector('.chat-thread'); thread?.insertAdjacentHTML('beforeend', `<div class="message user"><small>You</small>${input.value}</div><div class="message ai"><small>COS-IG</small>I checked the connected dashboard context. The next best action is to protect ROAS, clear approvals, and prioritize the highest-intent enrollment channels.</div>`); input.value=''; thread.scrollTop = thread.scrollHeight; });
+    modalForm?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const title = firstInput?.value?.trim() || 'Untitled item';
+      const meta = modalForm?.querySelector('[name="meta"]')?.value?.trim() || 'new';
+      const activeLane = document.querySelector('.lane');
+      if (activeLane) activeLane.insertAdjacentHTML('beforeend', `<div class="task" draggable="true"><strong>${title}</strong><span class="tag">${meta}</span></div>`);
+      const decisionList = document.querySelector('.decision-list');
+      if (decisionList && !activeLane) decisionList.insertAdjacentHTML('afterbegin', `<div class="decision"><div class="decision-top"><strong>${title}</strong><span class="status yellow">New</span></div><p>${meta || 'New approval requested from dashboard.'}</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div>`);
+      modal?.classList.remove('open'); modalForm.reset(); bindInteractions(); showToast('Created and added to this page');
+    });
+    function bindInteractions() {
+      document.querySelectorAll('.actions .approve').forEach(btn => { if (btn.dataset.bound) return; btn.dataset.bound='1'; btn.addEventListener('click', (event) => { event.stopPropagation(); btn.textContent = 'Approved'; btn.disabled = true; const status=btn.closest('.decision')?.querySelector('.status'); if(status) { status.textContent='Approved'; status.className='status green'; } showToast('Decision approved'); }); });
+      document.querySelectorAll('.actions button').forEach(btn => { if (btn.dataset.boundAny) return; btn.dataset.boundAny='1'; if(btn.classList.contains('approve')) return; btn.addEventListener('click', (event) => { event.stopPropagation(); if(btn.textContent.trim()==='Reject') { const status=btn.closest('.decision')?.querySelector('.status'); if(status) { status.textContent='Rejected'; status.className='status red'; } showToast('Decision rejected'); } else { openModal('approval edit', 'Edit Approval'); if (firstInput) firstInput.value = btn.closest('.decision')?.querySelector('strong')?.textContent || '';  } }); });
+      document.querySelectorAll('.task').forEach(task => { if (task.dataset.bound) return; task.dataset.bound='1'; task.draggable = true; task.addEventListener('dragstart', () => task.classList.add('dragging')); task.addEventListener('dragend', () => task.classList.remove('dragging')); });
+      document.querySelectorAll('.lane').forEach(lane => { if (lane.dataset.bound) return; lane.dataset.bound='1'; lane.addEventListener('dragover', (event) => { event.preventDefault(); const task = document.querySelector('.task.dragging'); if (task) lane.appendChild(task); }); });
+    }
+    bindInteractions();
+    document.querySelector('.chat-composer')?.addEventListener('submit', (event) => { event.preventDefault(); const input = event.currentTarget.querySelector('input'); if (!input?.value.trim()) return; const thread = document.querySelector('.chat-thread'); thread?.insertAdjacentHTML('beforeend', `<div class="message user"><small>You</small>${input.value}</div><div class="message ai"><small>COS-IG</small>I checked the connected Supabase dashboard context. The next best action is to protect ROAS, clear approvals, and prioritize the highest-intent enrollment channels.</div>`); input.value=''; thread.scrollTop = thread.scrollHeight; });
+    async function loadDashboardData() {
+      try {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/docs?slug=eq.${encodeURIComponent(DATA_SLUG)}&select=body_md`, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
+        const rows = await res.json();
+        const data = rows?.[0]?.body_md ? JSON.parse(rows[0].body_md) : null;
+        if (!data) return;
+        Object.entries(data.metrics || {}).forEach(([key, value]) => { const el = document.querySelector(`[data-metric="${key}"]`); if (el) el.textContent = value; });
+        document.querySelectorAll('.source-pill').forEach(el => el.textContent = `Supabase connected · updated ${new Date(data.updatedAt || Date.now()).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}`);
+      } catch (error) { console.warn('Supabase dashboard data unavailable', error); }
+    }
+    loadDashboardData();
   </script>
 
 </body>
