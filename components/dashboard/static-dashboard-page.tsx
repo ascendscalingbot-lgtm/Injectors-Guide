@@ -85,13 +85,20 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
           backdrop-filter: blur(26px);
           -webkit-backdrop-filter: blur(26px);
         }
-        .ig-login-kicker {
-          width: fit-content;
+        .ig-login-kicker-wrap {
+          width: 100%;
           display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0 0 16px;
+          text-align: center;
+        }
+        .ig-login-kicker {
+          display: inline-flex;
           align-items: center;
           justify-content: center;
           gap: 8px;
-          margin: 0 auto 16px;
+          margin: 0;
           padding: 8px 12px;
           border-radius: 999px;
           background: rgba(255,255,255,0.62);
@@ -99,6 +106,7 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
           font-size: 11px;
           font-weight: 800;
           letter-spacing: 1.2px;
+          line-height: 1;
           text-transform: uppercase;
         }
         .ig-login-dot {
@@ -161,7 +169,9 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
         .ig-login-error { margin: 2px 0 0; color: #8c2635; font-size: 13px; font-weight: 700; }
       `}</style>
       <section className="ig-login-card" aria-label="Injectors Guide dashboard login">
-        <div className="ig-login-kicker"><span className="ig-login-dot" /> Injectors Guide</div>
+        <div className="ig-login-kicker-wrap">
+          <div className="ig-login-kicker"><span className="ig-login-dot" /> Injectors Guide</div>
+        </div>
         <h1 className="ig-login-title">Dashboard Login</h1>
         <p className="ig-login-copy">Sign in to access the Injectors Guide command center.</p>
         <form className="ig-login-form" onSubmit={submit}>
