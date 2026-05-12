@@ -178,7 +178,8 @@
     .profile-card { display: flex; align-items: center; gap: 13px; }
     .profile-card strong { margin-top: 4px; font-size: 16px; line-height: 1; white-space: nowrap; }
     .profile-card p { margin-top: 4px; }
-    .profile-avatar { position: relative; width: 54px; height: 54px; flex: 0 0 54px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #ffffff, var(--aqua)); color: var(--ink); font-weight: 800; box-shadow: 0 14px 32px rgba(0,0,0,0.18); }
+    .profile-avatar { position: relative; width: 58px; height: 58px; flex: 0 0 58px; border-radius: 50%; display: block; overflow: hidden; background: rgba(255,255,255,0.82); box-shadow: 0 14px 32px rgba(0,0,0,0.18); }
+    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     .main { min-width: 0; display: grid; gap: 12px; }
     .topbar {
@@ -186,22 +187,22 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 5px 9px 5px 14px;
+      padding: 18px 20px;
       border: 1px solid rgba(255,255,255,0.68);
       border-radius: 12px;
       background: rgba(255,255,255,0.58);
       box-shadow: 0 10px 26px rgba(14,29,52,0.06);
       backdrop-filter: blur(22px);
-      min-height: 54px;
+      min-height: 82px;
       box-sizing: border-box;
     }
     .title-kicker { margin: 1px 0 0; color: rgba(14,29,52,0.52); font-size: 9px; line-height: 1; font-weight: 700; letter-spacing: 1.1px; text-transform: uppercase; text-align: right; }
     h1, h2, h3 { margin: 0; }
     h1 {
       font-family: "Newsreader", serif;
-      font-size: clamp(25px, 2.25vw, 34px);
+      font-size: clamp(34px, 3.4vw, 48px);
       font-style: italic;
-      line-height: 0.92;
+      line-height: 1;
       letter-spacing: -1.5px;
       font-weight: 400;
     }
@@ -430,9 +431,8 @@
         <a href="/Injectors-Guide/dashboard/activity.html"><span class="left"><span class="ico">↻</span> Activity Log</span></a>
       </nav>
       <div class="agent-card profile-card">
-        <div class="profile-avatar">TA</div>
+        <div class="profile-avatar"><img src="/traci-jason.png" alt="Traci and Jason"></div>
         <div>
-          <small>Founder Account</small>
           <strong>Traci Andreason</strong>
           <p>MSN, FNP-C</p>
         </div>
@@ -450,10 +450,6 @@
         </div>
       </header>
 
-      <div class="alert">
-        <div>Floor breach watch: Google Search Brand is at 4.7x ROAS for 29 hours.</div>
-        <span>Alert triggers if any active channel stays under 5x for 48h.</span>
-      </div>
 
       <section class="metric-strip" aria-label="North star metrics">
         <article class="metric"><div class="label">Today’s Revenue <span class="fresh">live</span></div><strong data-metric="todayRevenue">$18,420</strong><small>Stripe-reconciled · +22% vs last Monday</small></article>
