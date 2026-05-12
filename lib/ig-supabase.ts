@@ -7,11 +7,13 @@ const SUPABASE_KEY =
 export type IgAccountRole = "admin" | "client";
 
 export type IgAccount = {
-  slug: string;
+  slug: "traci-andreason" | "shayan-samimi";
+  email: string;
   name: string;
   role: IgAccountRole;
   title: string;
-  imageUrl?: string;
+  imageUrl: string;
+  passwordHash?: string;
 };
 
 export type PrOpportunity = {
@@ -32,8 +34,8 @@ const headers = {
 };
 
 const accountsFallback: IgAccount[] = [
-  { slug: "traci-andreason", name: "Traci Andreason", role: "client", title: "Founder and CEO", imageUrl: "/traci-jason.png" },
-  { slug: "shayan-samimi", name: "Shayan Samimi", role: "admin", title: "Growth Partner", imageUrl: "/shayan-samimi.jpg" }
+  { slug: "traci-andreason", email: "traci@injectorsguide.co", name: "Traci Andreason", role: "client", title: "Founder and CEO", imageUrl: "/traci-jason.png" },
+  { slug: "shayan-samimi", email: "shayan@ascendscaling.com", name: "Shayan Samimi", role: "admin", title: "Growth Partner", imageUrl: "/shayan-samimi.jpg" }
 ];
 
 const prFallback: PrOpportunity[] = [
