@@ -88,8 +88,9 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
         .ig-login-kicker {
           display: inline-flex;
           align-items: center;
+          justify-content: center;
           gap: 8px;
-          margin-bottom: 16px;
+          margin: 0 auto 16px;
           padding: 8px 12px;
           border-radius: 999px;
           background: rgba(255,255,255,0.62);
@@ -102,6 +103,7 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
         .ig-login-dot { width: 9px; height: 9px; border-radius: 50%; background: #2f9f6b; box-shadow: 0 0 0 7px rgba(47,159,107,0.12); }
         .ig-login-title {
           margin: 0;
+          text-align: center;
           font-family: "Newsreader", serif;
           font-size: clamp(40px, 6vw, 64px);
           line-height: .92;
@@ -109,7 +111,7 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
           font-style: italic;
           font-weight: 500;
         }
-        .ig-login-copy { margin: 16px 0 24px; color: rgba(14,29,52,0.64); font-size: 14px; line-height: 1.6; font-weight: 600; }
+        .ig-login-copy { margin: 16px auto 24px; max-width: 390px; color: rgba(14,29,52,0.64); font-size: 14px; line-height: 1.6; font-weight: 600; text-align: center; }
         .ig-login-form { display: grid; gap: 12px; }
         .ig-login-form label { display: grid; gap: 7px; color: rgba(14,29,52,0.62); font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
         .ig-login-form input {
@@ -142,9 +144,9 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
         .ig-login-error { margin: 2px 0 0; color: #8c2635; font-size: 13px; font-weight: 700; }
       `}</style>
       <section className="ig-login-card" aria-label="Injectors Guide dashboard login">
-        <div className="ig-login-kicker"><span className="ig-login-dot" /> Password protected</div>
+        <div className="ig-login-kicker"><span className="ig-login-dot" /> Injectors Guide</div>
         <h1 className="ig-login-title">Dashboard Login</h1>
-        <p className="ig-login-copy">Sign in to access the Injectors Guide command center. Dashboard data stays hidden until authentication succeeds.</p>
+        <p className="ig-login-copy">Sign in to access the Injectors Guide command center.</p>
         <form className="ig-login-form" onSubmit={submit}>
           <label>Email<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" required /></label>
           <label>Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required /></label>
