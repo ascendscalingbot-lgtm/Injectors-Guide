@@ -1,5 +1,12 @@
-import { redirect } from "next/navigation";
+import { StaticDashboardPage } from "@/components/dashboard/static-dashboard-page";
+import { getStaticDashboardPage } from "@/lib/static-dashboard";
+
+export const metadata = {
+  title: "Injectors Guide — Command Dashboard"
+};
 
 export default function DashboardPage() {
-  redirect("/dashboard/index.html");
+  const dashboard = getStaticDashboardPage("index");
+
+  return <StaticDashboardPage {...dashboard} />;
 }

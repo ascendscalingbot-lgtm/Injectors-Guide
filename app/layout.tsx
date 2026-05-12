@@ -16,13 +16,13 @@ const newsreader = Newsreader({
 });
 
 export const metadata: Metadata = {
-  title: "Injectors Guide Command Center",
+  title: "Injectors Guide Command Dashboard",
   description:
-    "COS-IG Next.js chief-of-staff dashboard for Injectors Guide growth operations.",
+    "Injectors Guide operating dashboard for attribution, content, approvals, blockers, and growth controls.",
   openGraph: {
-    title: "Injectors Guide Command Center",
+    title: "Injectors Guide Command Dashboard",
     description:
-      "A shadcn-styled operating dashboard for attribution, content, approvals, blockers, and admin growth controls.",
+      "A command dashboard for attribution, content, approvals, blockers, and admin growth controls.",
     type: "website"
   }
 };
