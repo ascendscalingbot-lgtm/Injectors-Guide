@@ -447,11 +447,11 @@
           <h1>PR Tracker</h1>
         </div>
         <div class="topbar-right">
-          <div class="top-actions"><div class="ops-pill"><span></span> All Systems Operational</div><button class="action-btn" data-modal="create" data-kind="PR pitch">Add PR</button></div>
+          <div class="top-actions"><div class="ops-pill"><span></span> All Systems Operational</div><button class="action-btn" id="addPrButton" data-modal="create" data-kind="PR pitch" hidden>Add PR Opportunity</button></div>
           <p class="title-kicker source-pill">Pitches · placements · backlinks</p>
         </div>
       </header>
-      <section class="grid"><article class="card"><div class="card-header"><div><h2>Pitches In Flight</h2><p>Outlet, journalist, angle, status, and follow-up date.</p></div></div><div class="module-list"><div class="row"><strong>Beauty Independent</strong><span>Sent today</span></div><div class="row"><strong>Nurse.org</strong><span>Drafting angle</span></div><div class="row"><strong>MedEsthetics</strong><span>Follow-up tomorrow</span></div></div></article><article class="card"><div class="card-header"><div><h2>Placements Landed</h2><p>Track reach, DR, and backlink confirmation.</p></div></div><div class="module-list"><div class="row"><strong>3 placements</strong><span class="status green">Live</span></div><div class="row"><strong>Backlinks</strong><span>2 / 3 confirmed</span></div><div class="row"><strong>Estimated reach</strong><span>64k</span></div></div></article></section>
+      <section class="grid"><article class="card"><div class="card-header"><div><h2>Pitches In Flight</h2><p>Outlet, journalist, angle, status, and follow-up date.</p></div></div><div class="module-list" id="prInFlightList"><div class="row"><strong>Loading PR opportunities…</strong><span>Supabase</span></div></div></article><article class="card"><div class="card-header"><div><h2>Placements Landed</h2><p>Track completed placements and confirmed wins.</p></div></div><div class="module-list" id="prLandedList"><div class="row"><strong>Loading placements…</strong><span>Supabase</span></div></div></article></section>
     </main>
   </div>
 
@@ -483,17 +483,49 @@
     document.querySelectorAll('[data-modal]').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.kind || 'item')));
     document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => modal?.classList.remove('open')));
     modal?.addEventListener('click', (event) => { if (event.target === modal) modal.classList.remove('open'); });
-    modalForm?.addEventListener('submit', (event) => {
+    function getSelectedAccount() {
+      const params = new URLSearchParams(window.location.search);
+      const fromUrl = params.get('account');
+      if (fromUrl) localStorage.setItem('igAccount', fromUrl);
+      return fromUrl || localStorage.getItem('igAccount') || 'traci-andreason';
+    }
+    const selectedAccount = getSelectedAccount();
+    function escapeHtml(value) { return String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
+    function renderPrItems(items = []) {
+      const inFlight = items.filter(item => item.status !== 'landed');
+      const landed = items.filter(item => item.status === 'landed');
+      const renderRow = item => `<div class="row"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.stage || item.contact || 'Live')}</span></div>`;
+      const empty = '<div class="row"><strong>No items yet</strong><span>Ready</span></div>';
+      document.getElementById('prInFlightList').innerHTML = inFlight.length ? inFlight.map(renderRow).join('') : empty;
+      document.getElementById('prLandedList').innerHTML = landed.length ? landed.map(renderRow).join('') : empty;
+    }
+    async function loadAccount() {
+      try {
+        const res = await fetch(`/api/ig/accounts?account=${encodeURIComponent(selectedAccount)}`);
+        const data = await res.json();
+        if (data.currentAccount?.role === 'admin') document.getElementById('addPrButton')?.removeAttribute('hidden');
+      } catch (error) { console.warn('Account load unavailable', error); }
+    }
+    async function loadPrOpportunities() {
+      try {
+        const res = await fetch('/api/ig/pr');
+        const data = await res.json();
+        renderPrItems(data.items || []);
+      } catch (error) { console.warn('PR opportunities unavailable', error); }
+    }
+    modalForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const title = firstInput?.value?.trim() || 'Untitled item';
-      const meta = modalForm?.querySelector('[name="meta"]')?.value?.trim() || 'new';
-      const activeLane = document.querySelector('.lane');
-      if (activeLane) activeLane.insertAdjacentHTML('beforeend', `<div class="task" draggable="true"><strong>${title}</strong><span class="tag">${meta}</span></div>`);
-      const decisionList = document.querySelector('.decision-list');
-      if (decisionList && !activeLane) decisionList.insertAdjacentHTML('afterbegin', `<div class="decision"><div class="decision-top"><strong>${title}</strong><span class="status yellow">New</span></div><p>${meta || 'New approval requested from dashboard.'}</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div>`);
-      const moduleList = document.querySelector('.module-list');
-      if (moduleList && !activeLane && !decisionList) moduleList.insertAdjacentHTML('afterbegin', `<div class="row"><strong>${title}</strong><span>${meta}</span></div>`);
-      modal?.classList.remove('open'); modalForm.reset(); bindInteractions(); showToast('Created and added to this page');
+      const title = firstInput?.value?.trim() || 'Untitled PR opportunity';
+      const contact = modalForm?.querySelector('[name="meta"]')?.value?.trim() || 'New contact';
+      const stage = modalForm?.querySelector('[name="stage"]')?.value || 'Idea';
+      const notes = modalForm?.querySelector('[name="notes"]')?.value?.trim() || '';
+      try {
+        const res = await fetch('/api/ig/pr', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ account: selectedAccount, title, contact, stage, notes, status: stage === 'Published' ? 'landed' : 'in_flight' }) });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unable to save PR opportunity');
+        renderPrItems(data.items || []);
+        modal?.classList.remove('open'); modalForm.reset(); showToast('Saved to Supabase');
+      } catch (error) { showToast(error.message || 'Unable to save'); }
     });
     function bindInteractions() {
       document.querySelectorAll('.actions .approve').forEach(btn => { if (btn.dataset.bound) return; btn.dataset.bound='1'; btn.addEventListener('click', (event) => { event.stopPropagation(); btn.textContent = 'Approved'; btn.disabled = true; const status=btn.closest('.decision')?.querySelector('.status'); if(status) { status.textContent='Approved'; status.className='status green'; } showToast('Decision approved'); }); });
@@ -513,6 +545,8 @@
         document.querySelectorAll('.source-pill').forEach(el => el.textContent = `Supabase connected · updated ${new Date(data.updatedAt || Date.now()).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}`);
       } catch (error) { console.warn('Supabase dashboard data unavailable', error); }
     }
+    loadAccount();
+    loadPrOpportunities();
     loadDashboardData();
   </script>
 
