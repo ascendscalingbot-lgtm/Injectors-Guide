@@ -86,7 +86,8 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
           -webkit-backdrop-filter: blur(26px);
         }
         .ig-login-kicker {
-          display: inline-flex;
+          width: fit-content;
+          display: flex;
           align-items: center;
           justify-content: center;
           gap: 8px;
@@ -100,7 +101,23 @@ function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }
           letter-spacing: 1.2px;
           text-transform: uppercase;
         }
-        .ig-login-dot { width: 9px; height: 9px; border-radius: 50%; background: #2f9f6b; box-shadow: 0 0 0 7px rgba(47,159,107,0.12); }
+        .ig-login-dot {
+          position: relative;
+          width: 9px;
+          height: 9px;
+          border-radius: 50%;
+          background: #2f9f6b;
+          box-shadow: 0 0 0 1px rgba(47,159,107,0.28), 0 0 14px rgba(47,159,107,0.52);
+        }
+        .ig-login-dot::before {
+          content: "";
+          position: absolute;
+          inset: -5px;
+          border-radius: inherit;
+          background: rgba(47,159,107,0.34);
+          animation: igLoginPing 1.45s cubic-bezier(0,0,0.2,1) infinite;
+        }
+        @keyframes igLoginPing { 75%, 100% { transform: scale(2.1); opacity: 0; } }
         .ig-login-title {
           margin: 0;
           text-align: center;
