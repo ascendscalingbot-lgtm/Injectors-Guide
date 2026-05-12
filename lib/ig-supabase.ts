@@ -11,6 +11,7 @@ export type IgAccount = {
   name: string;
   role: IgAccountRole;
   title: string;
+  imageUrl?: string;
 };
 
 export type PrOpportunity = {
@@ -31,8 +32,8 @@ const headers = {
 };
 
 const accountsFallback: IgAccount[] = [
-  { slug: "traci-andreason", name: "Traci Andreason", role: "client", title: "Founder and CEO" },
-  { slug: "shayan-samimi", name: "Shayan Samimi", role: "admin", title: "Ascend Scaling" }
+  { slug: "traci-andreason", name: "Traci Andreason", role: "client", title: "Founder and CEO", imageUrl: "/traci-jason.png" },
+  { slug: "shayan-samimi", name: "Shayan Samimi", role: "admin", title: "Growth Partner", imageUrl: "/shayan-samimi.jpg" }
 ];
 
 const prFallback: PrOpportunity[] = [
