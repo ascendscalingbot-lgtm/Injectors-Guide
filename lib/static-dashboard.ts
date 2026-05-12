@@ -9,7 +9,8 @@ export const dashboardPages = [
   "paid-media",
   "pr",
   "decisions",
-  "activity"
+  "activity",
+  "admin"
 ] as const;
 
 export type DashboardPageSlug = (typeof dashboardPages)[number];
@@ -30,6 +31,7 @@ function rewriteDashboardRoutes(source: string) {
     .replaceAll("/Injectors-Guide/dashboard/pr.html", "/dashboard/pr")
     .replaceAll("/Injectors-Guide/dashboard/decisions.html", "/dashboard/decisions")
     .replaceAll("/Injectors-Guide/dashboard/activity.html", "/dashboard/activity")
+    .replaceAll("/Injectors-Guide/dashboard/admin.html", "/dashboard/admin")
     .replaceAll("/Injectors-Guide/dashboard/", "/dashboard");
 }
 

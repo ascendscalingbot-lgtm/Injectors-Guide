@@ -130,6 +130,8 @@
       transform: translateX(2px);
     }
     .nav .left { display: inline-flex; align-items: center; gap: 10px; }
+    .admin-only { display: none !important; }
+    body[data-role="admin"] .admin-only { display: flex !important; }
     .ico {
       width: 27px;
       height: 27px;
@@ -431,6 +433,7 @@
         <a href="/Injectors-Guide/dashboard/pr.html"><span class="left"><span class="ico">✉</span> PR Tracker</span></a>
         <a href="/Injectors-Guide/dashboard/decisions.html"><span class="left"><span class="ico">!</span> Decisions Needed</span><span class="badge">7</span></a>
         <a class="active" href="/Injectors-Guide/dashboard/activity.html"><span class="left"><span class="ico">↻</span> Activity Log</span></a>
+        <a class="admin-only" href="/Injectors-Guide/dashboard/admin.html"><span class="left"><span class="ico">⚙</span> Admin</span></a>
       </nav>
       <div class="agent-card profile-card">
         <div class="profile-avatar"><img src="/traci-jason.png" alt="Traci and Jason"></div>

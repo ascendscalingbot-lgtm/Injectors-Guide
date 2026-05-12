@@ -1,42 +1,49 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { SessionAccount } from "@/lib/ig-auth";
 
-type StaticDashboardPageProps = {
+type StaticDashboardPayload = {
   css: string;
   html: string;
   script: string;
 };
 
-type AccountSlug = "traci-andreason" | "shayan-samimi";
-
-type AccountProfile = {
-  name: string;
-  title: string;
-  imageUrl: string;
+type StaticDashboardPageProps = {
+  dashboard: StaticDashboardPayload | null;
+  account: SessionAccount | null;
 };
 
-const accountProfiles: Record<AccountSlug, AccountProfile> = {
-  "traci-andreason": {
-    name: "Traci Andreason",
-    title: "Founder and CEO",
-    imageUrl: "/traci-jason.png"
-  },
-  "shayan-samimi": {
-    name: "Shayan Samimi",
-    title: "Growth Partner",
-    imageUrl: "/shayan-samimi.jpg"
+function LoginScreen({ onLogin }: { onLogin: (account: SessionAccount) => void }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function submit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/ig/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await response.json();
+
+      if (!response.ok) throw new Error(data.error || "Unable to log in.");
+
+      onLogin(data.account);
+      window.location.reload();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to log in.");
+    } finally {
+      setLoading(false);
+    }
   }
-};
 
-function getStoredAccount(): AccountSlug | null {
-  if (typeof window === "undefined") return null;
-
-  const stored = window.localStorage.getItem("igAccount");
-  return stored === "traci-andreason" || stored === "shayan-samimi" ? stored : null;
-}
-
-function LoginScreen({ onLogin }: { onLogin: (account: AccountSlug) => void }) {
   return (
     <div className="ig-login-screen">
       <style>{`
@@ -69,8 +76,8 @@ function LoginScreen({ onLogin }: { onLogin: (account: AccountSlug) => void }) {
         .ig-login-card {
           position: relative;
           z-index: 1;
-          width: min(920px, 100%);
-          padding: 28px;
+          width: min(520px, 100%);
+          padding: 30px;
           border: 1px solid rgba(255,255,255,0.68);
           border-radius: 24px;
           background: linear-gradient(160deg, rgba(255,255,255,0.76), rgba(255,255,255,0.42));
@@ -92,160 +99,95 @@ function LoginScreen({ onLogin }: { onLogin: (account: AccountSlug) => void }) {
           letter-spacing: 1.2px;
           text-transform: uppercase;
         }
-        .ig-login-dot {
-          width: 9px;
-          height: 9px;
-          border-radius: 50%;
-          background: #2f9f6b;
-          box-shadow: 0 0 0 7px rgba(47,159,107,0.12);
-        }
+        .ig-login-dot { width: 9px; height: 9px; border-radius: 50%; background: #2f9f6b; box-shadow: 0 0 0 7px rgba(47,159,107,0.12); }
         .ig-login-title {
           margin: 0;
           font-family: "Newsreader", serif;
-          font-size: clamp(42px, 6vw, 74px);
+          font-size: clamp(40px, 6vw, 64px);
           line-height: .92;
-          letter-spacing: -2.8px;
+          letter-spacing: -2.4px;
           font-style: italic;
           font-weight: 500;
         }
-        .ig-login-copy {
-          max-width: 640px;
-          margin: 16px 0 28px;
-          color: rgba(14,29,52,0.64);
-          font-size: 15px;
-          line-height: 1.6;
-          font-weight: 600;
-        }
-        .ig-login-options {
-          display: grid;
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-          gap: 14px;
-        }
-        .ig-login-option {
-          display: flex;
-          align-items: center;
-          gap: 14px;
+        .ig-login-copy { margin: 16px 0 24px; color: rgba(14,29,52,0.64); font-size: 14px; line-height: 1.6; font-weight: 600; }
+        .ig-login-form { display: grid; gap: 12px; }
+        .ig-login-form label { display: grid; gap: 7px; color: rgba(14,29,52,0.62); font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+        .ig-login-form input {
           width: 100%;
-          min-height: 116px;
-          padding: 16px;
-          border: 1px solid rgba(255,255,255,0.72);
-          border-radius: 18px;
-          background: rgba(255,255,255,0.58);
+          min-height: 52px;
+          border: 1px solid rgba(14,29,52,0.1);
+          border-radius: 16px;
+          background: rgba(255,255,255,0.72);
+          padding: 0 15px;
           color: #0E1D34;
-          text-align: left;
           font: inherit;
-          cursor: pointer;
-          box-shadow: 0 16px 42px rgba(14,29,52,0.08);
-          transition: transform .22s ease, box-shadow .22s ease, background .22s ease;
+          outline: none;
+          box-shadow: inset 0 0 0 1px rgba(255,255,255,0.36);
         }
-        .ig-login-option:hover {
-          transform: translateY(-3px);
-          background: rgba(255,255,255,0.78);
-          box-shadow: 0 24px 60px rgba(14,29,52,0.13);
-        }
-        .ig-login-avatar {
-          width: 64px;
-          height: 64px;
-          border-radius: 50%;
-          object-fit: cover;
-          flex: 0 0 64px;
-          box-shadow: 0 14px 32px rgba(14,29,52,0.16);
-        }
-        .ig-login-option strong {
-          display: block;
-          font-size: 18px;
-          line-height: 1.1;
-        }
-        .ig-login-option span {
-          display: block;
+        .ig-login-form button {
+          min-height: 52px;
           margin-top: 6px;
-          color: rgba(14,29,52,0.58);
-          font-size: 12px;
-          font-weight: 800;
-          letter-spacing: .7px;
+          border: 0;
+          border-radius: 16px;
+          background: #0E1D34;
+          color: white;
+          font: inherit;
+          font-size: 13px;
+          font-weight: 900;
+          letter-spacing: .5px;
           text-transform: uppercase;
+          cursor: pointer;
+          box-shadow: 0 18px 44px rgba(14,29,52,0.22);
         }
-        @media (max-width: 720px) {
-          .ig-login-options { grid-template-columns: 1fr; }
-          .ig-login-card { padding: 20px; }
-        }
+        .ig-login-error { margin: 2px 0 0; color: #8c2635; font-size: 13px; font-weight: 700; }
       `}</style>
       <section className="ig-login-card" aria-label="Injectors Guide dashboard login">
-        <div className="ig-login-kicker"><span className="ig-login-dot" /> Secure dashboard access</div>
-        <h1 className="ig-login-title">Injectors Guide Command Center</h1>
-        <p className="ig-login-copy">
-          Choose your profile to open the dashboard. Traci gets a clean client view; Shayan gets operator controls for adding PR, approvals, and growth actions.
-        </p>
-        <div className="ig-login-options">
-          <button className="ig-login-option" type="button" onClick={() => onLogin("traci-andreason")}>
-            <img className="ig-login-avatar" src="/traci-jason.png" alt="Traci Andreason" />
-            <div><strong>Traci Andreason</strong><span>Founder and CEO</span></div>
-          </button>
-          <button className="ig-login-option" type="button" onClick={() => onLogin("shayan-samimi")}>
-            <img className="ig-login-avatar" src="/shayan-samimi.jpg" alt="Shayan Samimi" />
-            <div><strong>Shayan Samimi</strong><span>Growth Partner</span></div>
-          </button>
-        </div>
+        <div className="ig-login-kicker"><span className="ig-login-dot" /> Password protected</div>
+        <h1 className="ig-login-title">Dashboard Login</h1>
+        <p className="ig-login-copy">Sign in to access the Injectors Guide command center. Dashboard data stays hidden until authentication succeeds.</p>
+        <form className="ig-login-form" onSubmit={submit}>
+          <label>Email<input type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" required /></label>
+          <label>Password<input type="password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required /></label>
+          {error ? <p className="ig-login-error">{error}</p> : null}
+          <button type="submit" disabled={loading}>{loading ? "Signing in…" : "Log in"}</button>
+        </form>
       </section>
     </div>
   );
 }
 
-export function StaticDashboardPage({ css, html, script }: StaticDashboardPageProps) {
-  const [account, setAccount] = useState<AccountSlug | null>(null);
-  const [ready, setReady] = useState(false);
+export function StaticDashboardPage({ dashboard, account }: StaticDashboardPageProps) {
+  const [currentAccount, setCurrentAccount] = useState(account);
 
   useEffect(() => {
-    setAccount(getStoredAccount());
-    setReady(true);
-  }, []);
+    setCurrentAccount(account);
+  }, [account]);
 
   useEffect(() => {
-    if (!account) return;
+    if (!currentAccount || !dashboard) return;
 
-    const profile = accountProfiles[account];
+    document.body.dataset.role = currentAccount.role;
+    window.localStorage.setItem("igAccount", currentAccount.slug);
+
     const profileCard = document.querySelector(".profile-card");
     const profileImage = profileCard?.querySelector(".profile-avatar img") as HTMLImageElement | null;
     const profileName = profileCard?.querySelector("strong");
     const profileTitle = profileCard?.querySelector("p");
 
     if (profileImage) {
-      profileImage.src = profile.imageUrl;
-      profileImage.alt = profile.name;
+      profileImage.src = currentAccount.imageUrl;
+      profileImage.alt = currentAccount.name;
     }
-    if (profileName) profileName.textContent = profile.name;
-    if (profileTitle) profileTitle.textContent = profile.title;
+    if (profileName) profileName.textContent = currentAccount.name;
+    if (profileTitle) profileTitle.textContent = currentAccount.title;
 
-    if (profileCard && !profileCard.querySelector(".profile-switch")) {
-      const switchButton = document.createElement("button");
-      switchButton.type = "button";
-      switchButton.className = "profile-switch";
-      switchButton.textContent = "Switch profile";
-      switchButton.setAttribute(
-        "style",
-        "position:absolute;right:12px;bottom:10px;border:0;background:rgba(255,255,255,.14);color:rgba(255,255,255,.74);border-radius:999px;padding:4px 8px;font:inherit;font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;cursor:pointer;"
-      );
-      switchButton.addEventListener("click", () => {
-        window.localStorage.removeItem("igAccount");
-        setAccount(null);
-      });
-      profileCard.appendChild(switchButton);
-    }
-
-    if (!script.trim()) return;
-    const runDashboardScript = new Function(script);
+    if (!dashboard.script.trim()) return;
+    const runDashboardScript = new Function(dashboard.script);
     runDashboardScript();
-  }, [account, script, html]);
+  }, [currentAccount, dashboard]);
 
-  function login(nextAccount: AccountSlug) {
-    window.localStorage.setItem("igAccount", nextAccount);
-    setAccount(nextAccount);
-  }
-
-  if (!ready) return null;
-
-  if (!account) {
-    return <LoginScreen onLogin={login} />;
+  if (!currentAccount || !dashboard) {
+    return <LoginScreen onLogin={setCurrentAccount} />;
   }
 
   return (
@@ -256,8 +198,8 @@ export function StaticDashboardPage({ css, html, script }: StaticDashboardPagePr
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..800&display=swap"
         rel="stylesheet"
       />
-      <style dangerouslySetInnerHTML={{ __html: css }} />
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <style dangerouslySetInnerHTML={{ __html: dashboard.css }} />
+      <div dangerouslySetInnerHTML={{ __html: dashboard.html }} />
     </>
   );
 }

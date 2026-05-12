@@ -1,11 +1,15 @@
 import { NextResponse } from "next/server";
-import { getIgAccount, getIgAccounts } from "@/lib/ig-supabase";
+import { getSessionAccount } from "@/lib/ig-auth";
+import { getIgAccounts } from "@/lib/ig-supabase";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const selected = searchParams.get("account") || "traci-andreason";
-  const accounts = await getIgAccounts();
-  const currentAccount = await getIgAccount(selected);
+export async function GET() {
+  const currentAccount = await getSessionAccount();
+
+  if (!currentAccount) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
+  const accounts = currentAccount.role === "admin" ? await getIgAccounts() : [currentAccount];
 
   return NextResponse.json({ accounts, currentAccount });
 }

@@ -424,16 +424,16 @@
         <span class="logo">Injectors Guide</span>
       </div>
       <nav class="nav">
-        <a class="active" href="/Injectors-Guide/dashboard/"><span class="left"><span class="ico">✦</span> Overview</span></a>
+        <a href="/Injectors-Guide/dashboard/"><span class="left"><span class="ico">✦</span> Overview</span></a>
         <a href="/Injectors-Guide/dashboard/ai-chat.html"><span class="left"><span class="ico">✧</span> AI Chat</span></a>
         <a href="/Injectors-Guide/dashboard/attribution.html"><span class="left"><span class="ico">◒</span> Attribution</span></a>
         <a href="/Injectors-Guide/dashboard/pipeline.html"><span class="left"><span class="ico">▦</span> Content Pipeline</span></a>
         <a href="/Injectors-Guide/dashboard/seo.html"><span class="left"><span class="ico">⌁</span> SEO Command</span></a>
         <a href="/Injectors-Guide/dashboard/paid-media.html"><span class="left"><span class="ico">◎</span> Paid Media</span></a>
-        <a href="/Injectors-Guide/dashboard/pr.html"><span class="left"><span class="ico">✉</span> PR Tracker</span></a>
+        <a class="active" href="/Injectors-Guide/dashboard/pr.html"><span class="left"><span class="ico">✉</span> PR Tracker</span></a>
         <a href="/Injectors-Guide/dashboard/decisions.html"><span class="left"><span class="ico">!</span> Decisions Needed</span><span class="badge">7</span></a>
         <a href="/Injectors-Guide/dashboard/activity.html"><span class="left"><span class="ico">↻</span> Activity Log</span></a>
-        <a class="admin-only" href="/Injectors-Guide/dashboard/admin.html"><span class="left"><span class="ico">⚙</span> Admin</span></a>
+        <a class="admin-only active" href="/Injectors-Guide/dashboard/admin.html"><span class="left"><span class="ico">⚙</span> Admin</span></a>
       </nav>
       <div class="agent-card profile-card">
         <div class="profile-avatar"><img src="/traci-jason.png" alt="Traci and Jason"></div>
@@ -444,90 +444,43 @@
       </div>
     </aside>
 
-    <main class="main" id="overview">
+    <main class="main">
       <header class="topbar">
         <div>
-          <h1>Business Dashboard</h1>
+          <h1>Admin</h1>
         </div>
         <div class="topbar-right">
-          <div class="top-actions"><div class="ops-pill"><span></span> All Systems Operational</div></div>
-          <p class="title-kicker source-pill">Injectors Guide HQ · updated 2 min ago</p>
+          <div class="top-actions"><div class="ops-pill"><span></span> Admin Access</div></div>
+          <p class="title-kicker source-pill">Accounts · permissions · view controls</p>
         </div>
       </header>
-
-
-      <section class="metric-strip" aria-label="North star metrics">
-        <article class="metric"><div class="label">Today’s Revenue <span class="fresh">live</span></div><strong data-metric="todayRevenue">$18,420</strong><small>Stripe-reconciled · +22% vs last Monday</small></article>
-        <article class="metric"><div class="label">MTD Revenue <span class="fresh">15m</span></div><strong data-metric="mtdRevenue">$286.7k</strong><small>76 net-new enrollments this month</small></article>
-        <article class="metric"><div class="label">MTD Spend <span class="fresh">15m</span></div><strong data-metric="mtdSpend">$53.1k</strong><small>Meta + Google + creator boosts</small></article>
-        <article class="metric roas"><div class="label">Blended ROAS <span class="fresh">7d/1d</span></div><strong data-metric="roas">5.4x</strong><small>Paid attribution reconciling weekly</small></article>
-        <article class="metric"><div class="label">Enrollments <span class="fresh">today</span></div><strong data-metric="enrollments">11 / 184</strong><small>Today / month-to-date</small></article>
-        <article class="metric"><div class="label">Approval Queue <span class="badge">7</span></div><strong>7</strong><small>3 ads · 2 blogs · 1 PR pitch · 1 budget move</small></article>
-      </section>
-
-      <section class="grid" id="attribution">
-        <article class="card click-card" onclick="location.href='/Injectors-Guide/dashboard/attribution.html'">
-          <div class="card-header">
-            <div><h2>Attribution</h2><p>Revenue by channel with paid attribution set to 7-day click + 1-day view. Stripe remains the final source of truth.</p></div>
-            <div class="segmented"><button>7d</button><button class="active">30d</button><button>90d</button><button>All</button></div>
-          </div>
-          <div class="chart-wrap">
-            <div class="stacked-chart" aria-label="Stacked bar chart mockup">
-              <div class="bar-col"><div class="bar"><span class="seg meta" style="height: 42%"></span><span class="seg google" style="height: 22%"></span><span class="seg seo" style="height: 14%"></span><span class="seg email" style="height: 16%"></span></div><span class="bar-label">Mon</span></div>
-              <div class="bar-col"><div class="bar"><span class="seg meta" style="height: 38%"></span><span class="seg google" style="height: 20%"></span><span class="seg seo" style="height: 18%"></span><span class="seg email" style="height: 11%"></span></div><span class="bar-label">Tue</span></div>
-              <div class="bar-col"><div class="bar"><span class="seg meta" style="height: 52%"></span><span class="seg google" style="height: 19%"></span><span class="seg seo" style="height: 12%"></span><span class="seg email" style="height: 9%"></span></div><span class="bar-label">Wed</span></div>
-              <div class="bar-col"><div class="bar"><span class="seg meta" style="height: 46%"></span><span class="seg google" style="height: 26%"></span><span class="seg seo" style="height: 11%"></span><span class="seg email" style="height: 10%"></span></div><span class="bar-label">Thu</span></div>
-              <div class="bar-col"><div class="bar"><span class="seg meta" style="height: 58%"></span><span class="seg google" style="height: 17%"></span><span class="seg seo" style="height: 13%"></span><span class="seg email" style="height: 8%"></span></div><span class="bar-label">Fri</span></div>
-              <div class="bar-col"><div class="bar"><span class="seg meta" style="height: 40%"></span><span class="seg google" style="height: 21%"></span><span class="seg seo" style="height: 18%"></span><span class="seg email" style="height: 13%"></span></div><span class="bar-label">Sat</span></div>
-              <div class="bar-col"><div class="bar"><span class="seg meta" style="height: 49%"></span><span class="seg google" style="height: 18%"></span><span class="seg seo" style="height: 16%"></span><span class="seg email" style="height: 11%"></span></div><span class="bar-label">Sun</span></div>
-            </div>
-            <table>
-              <thead><tr><th>Channel</th><th>Spend</th><th>Revenue</th><th>ROAS</th><th>CPE</th><th>Status</th></tr></thead>
-              <tbody>
-                <tr><td>Meta Ads</td><td>$31,240</td><td>$178,900</td><td>5.7x</td><td>$287</td><td><span class="status green">Scaling</span></td></tr>
-                <tr><td>Google Ads</td><td>$18,120</td><td>$86,400</td><td>4.8x</td><td>$342</td><td><span class="status yellow">Watch</span></td></tr>
-                <tr><td>SEO</td><td>$0</td><td>$41,200</td><td>—</td><td>—</td><td><span class="status green">Compounding</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-
-        <article class="card click-card" id="decisions" onclick="location.href='/Injectors-Guide/dashboard/decisions.html'">
-          <div class="card-header"><div><h2>Decisions Needed</h2><p>Everything requiring founder approval before publishing, spending, or clinical-claim use.</p></div></div>
-          <div class="decision-list">
-            <div class="decision"><div class="decision-top"><strong>Approve Meta creative batch #14</strong><span class="status green">Ad</span></div><p>3 testimonial angles using career autonomy hook. Clinical claims verified.</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div>
-            <div class="decision"><div class="decision-top"><strong>Budget lift: Meta prospecting +18%</strong><span class="status yellow">Budget</span></div><p>Agent recommends increase after 5.9x ROAS for 72h. Requires approval over 15%.</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div>
-            <div class="decision"><div class="decision-top"><strong>PR pitch: “From ER burnout to aesthetics”</strong><span class="status red">Claims</span></div><p>Needs Traci review before outreach to nursing publications.</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div>
-          </div>
-        </article>
-      </section>
-
-      <section class="card click-card" id="pipeline" onclick="location.href='/Injectors-Guide/dashboard/pipeline.html'">
-        <div class="card-header"><div><h2>Content Pipeline</h2><p>Drag-ready operating board for blog, YouTube, short-form, ad concepts, and PR pitches.</p></div><button class="export">Export CSV</button></div>
-        <div class="kanban">
-          <div class="lane"><h3>Idea</h3><div class="task"><strong>“How much can injectors make?”</strong><span class="tag">blog · salary keyword</span></div></div>
-          <div class="lane"><h3>Brief</h3><div class="task"><strong>Botox certification online vs in-person</strong><span class="tag">SEO</span></div></div>
-          <div class="lane"><h3>Drafted</h3><div class="task"><strong>Resume template lead magnet</strong><span class="tag">email</span></div></div>
-          <div class="lane"><h3>In Review</h3><div class="task"><strong>Clinical safety module teaser</strong><span class="tag">short</span></div></div>
-          <div class="lane"><h3>Scheduled</h3><div class="task"><strong>Career switch story reel</strong><span class="tag">Instagram</span></div></div>
-          <div class="lane"><h3>Published</h3><div class="task"><strong>Medspa owner hiring signals</strong><span class="tag">YouTube</span></div></div>
-          <div class="lane"><h3>Performance</h3><div class="task"><strong>Secret Lives social proof page</strong><span class="tag">+18 enrollments</span></div></div>
-        </div>
-      </section>
-
-      <section class="module-grid">
-        <article class="card mini click-card" id="seo" onclick="location.href='/Injectors-Guide/dashboard/seo.html'"><div class="card-header"><div><h2>SEO Command</h2><p>Rankings, GSC movement, technical health, and content gaps.</p></div></div><div class="module-list"><div class="row"><strong>“injector certification Utah”</strong><span>Pos 4 · +2</span></div><div class="row"><strong>Striking distance</strong><span>19 keywords</span></div><div class="row"><strong>Technical health</strong><span class="status green">92%</span></div><div class="row"><strong>GSC clicks</strong><span class="sparkline"></span></div></div></article>
-        <article class="card mini click-card" id="paid" onclick="location.href='/Injectors-Guide/dashboard/paid-media.html'"><div class="card-header"><div><h2>Paid Media</h2><p>Meta + Google campaigns, fatigue warnings, and budget pacing.</p></div></div><div class="module-list"><div class="row"><strong>Meta Prospecting CBO</strong><span class="status green">5.9x</span></div><div class="row"><strong>Google Brand Search</strong><span class="status yellow">4.7x</span></div><div class="row"><strong>Creative fatigue</strong><span>2 warnings</span></div><div class="row"><strong>Budget pacing</strong><span>61% used</span></div></div></article>
-        <article class="card mini click-card" id="pr" onclick="location.href='/Injectors-Guide/dashboard/pr.html'"><div class="card-header"><div><h2>PR Tracker</h2><p>Pitches in flight, placements landed, backlink confirmation.</p></div></div><div class="module-list"><div class="row"><strong>Beauty Independent</strong><span>Sent today</span></div><div class="row"><strong>Nurse.org</strong><span>Drafting angle</span></div><div class="row"><strong>Placements landed</strong><span>3</span></div><div class="row"><strong>Backlinks confirmed</strong><span>2 / 3</span></div></div></article>
-      </section>
-
       <section class="grid">
-        <article class="card click-card" id="activity" onclick="location.href='/Injectors-Guide/dashboard/activity.html'"><div class="card-header"><div><h2>Activity Log</h2><p>Append-only feed of autonomous work: action, why, expected impact, and result.</p></div></div><div class="activity-list"><div class="activity"><span class="time">2:14 PM</span><div><strong>COS-IG paused underperforming Google broad ad group.</strong><p>Why: 2.6x ROAS for 36h. Expected impact: protect $420/day from low-intent queries.</p></div></div><div class="activity"><span class="time">1:52 PM</span><div><strong>Generated 6 new Meta hooks from testimonial transcript.</strong><p>Why: current winner is nearing fatigue threshold. Result pending approval.</p></div></div><div class="activity"><span class="time">12:41 PM</span><div><strong>Queued SEO brief for striking-distance keyword.</strong><p>Why: position 11 with high commercial intent. Expected impact: +900 clicks/mo.</p></div></div></div></article>
-
+        <article class="card">
+          <div class="card-header"><div><h2>Sub Accounts</h2><p>Switch into a client view to see exactly what they see. Your admin permissions stay active in the background.</p></div></div>
+          <div class="module-list" id="adminAccountsList"><div class="row"><strong>Loading accounts…</strong><span>Supabase</span></div></div>
+        </article>
+        <article class="card">
+          <div class="card-header"><div><h2>Current Session</h2><p>You are logged in as Shayan. Use this page to manage future sub-accounts and client views.</p></div></div>
+          <div class="module-list"><div class="row"><strong>Logged in</strong><span>Shayan Samimi</span></div><div class="row"><strong>Role</strong><span class="status green">Admin</span></div><div class="row"><strong>Client controls</strong><span>Enabled</span></div></div>
+        </article>
       </section>
     </main>
   </div>
-  <div class="toast" id="toast">Dashboard data loaded from Supabase</div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <h2 id="modalTitle">Add PR Opportunity</h2>
+      <p id="modalCopy">Create a focused PR opportunity. It updates this page immediately and is structured for Supabase persistence.</p>
+      <form id="modalForm" data-kind="PR opportunity">
+        <label><span>Title</span><input name="title" placeholder="Outlet / pitch title" required></label>
+        <label><span>Contact / reporter</span><input name="meta" placeholder="Contact / reporter"></label>
+        <label><span>Stage</span><select name="stage"><option>Idea</option><option>Draft</option><option>Review</option><option>Approved</option><option>Rejected</option><option>Published</option></select></label>
+        <label><span>Notes</span><textarea name="notes" placeholder="Context, next action, owner, or approval notes"></textarea></label>
+        <div class="modal-actions"><button type="button" class="action-btn ghost-btn" data-close>Cancel</button><button type="submit" class="action-btn">Save</button></div>
+      </form>
+    </div>
+  </div>
+  <div class="toast" id="toast">Saved to dashboard queue</div>
   <script>
     const SUPABASE_URL = 'https://cmtvqqfofegbzzfmrvbv.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtdHZxcWZvZmVnYnp6Zm1ydmJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4MzIwMzUsImV4cCI6MjA4NTQwODAzNX0.cEEUBEFnew06U8CtL0eB1hs1kAGN5Frmie1fybX1Dzc';
@@ -542,17 +495,46 @@
     document.querySelectorAll('[data-modal]').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.kind || 'item')));
     document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => modal?.classList.remove('open')));
     modal?.addEventListener('click', (event) => { if (event.target === modal) modal.classList.remove('open'); });
-    modalForm?.addEventListener('submit', (event) => {
+    function getSelectedAccount() {
+      return localStorage.getItem('igAccount') || 'traci-andreason';
+    }
+    const selectedAccount = getSelectedAccount();
+    function escapeHtml(value) { return String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
+    function renderPrItems(items = []) {
+      const inFlight = items.filter(item => item.status !== 'landed');
+      const landed = items.filter(item => item.status === 'landed');
+      const renderRow = item => `<div class="row"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.stage || item.contact || 'Live')}</span></div>`;
+      const empty = '<div class="row"><strong>No items yet</strong><span>Ready</span></div>';
+      document.getElementById('prInFlightList').innerHTML = inFlight.length ? inFlight.map(renderRow).join('') : empty;
+      document.getElementById('prLandedList').innerHTML = landed.length ? landed.map(renderRow).join('') : empty;
+    }
+    async function loadAccount() {
+      try {
+        const res = await fetch(`/api/ig/accounts?account=${encodeURIComponent(selectedAccount)}`);
+        const data = await res.json();
+        if (data.currentAccount?.role === 'admin') document.getElementById('addPrButton')?.removeAttribute('hidden');
+      } catch (error) { console.warn('Account load unavailable', error); }
+    }
+    async function loadPrOpportunities() {
+      try {
+        const res = await fetch('/api/ig/pr');
+        const data = await res.json();
+        renderPrItems(data.items || []);
+      } catch (error) { console.warn('PR opportunities unavailable', error); }
+    }
+    modalForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const title = firstInput?.value?.trim() || 'Untitled item';
-      const meta = modalForm?.querySelector('[name="meta"]')?.value?.trim() || 'new';
-      const activeLane = document.querySelector('.lane');
-      if (activeLane) activeLane.insertAdjacentHTML('beforeend', `<div class="task" draggable="true"><strong>${title}</strong><span class="tag">${meta}</span></div>`);
-      const decisionList = document.querySelector('.decision-list');
-      if (decisionList && !activeLane) decisionList.insertAdjacentHTML('afterbegin', `<div class="decision"><div class="decision-top"><strong>${title}</strong><span class="status yellow">New</span></div><p>${meta || 'New approval requested from dashboard.'}</p><div class="actions"><button class="approve">Approve</button><button>Edit</button><button>Reject</button></div></div>`);
-      const moduleList = document.querySelector('.module-list');
-      if (moduleList && !activeLane && !decisionList) moduleList.insertAdjacentHTML('afterbegin', `<div class="row"><strong>${title}</strong><span>${meta}</span></div>`);
-      modal?.classList.remove('open'); modalForm.reset(); bindInteractions(); showToast('Created and added to this page');
+      const title = firstInput?.value?.trim() || 'Untitled PR opportunity';
+      const contact = modalForm?.querySelector('[name="meta"]')?.value?.trim() || 'New contact';
+      const stage = modalForm?.querySelector('[name="stage"]')?.value || 'Idea';
+      const notes = modalForm?.querySelector('[name="notes"]')?.value?.trim() || '';
+      try {
+        const res = await fetch('/api/ig/pr', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ account: selectedAccount, title, contact, stage, notes, status: stage === 'Published' ? 'landed' : 'in_flight' }) });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unable to save PR opportunity');
+        renderPrItems(data.items || []);
+        modal?.classList.remove('open'); modalForm.reset(); showToast('Saved to Supabase');
+      } catch (error) { showToast(error.message || 'Unable to save'); }
     });
     function bindInteractions() {
       document.querySelectorAll('.actions .approve').forEach(btn => { if (btn.dataset.bound) return; btn.dataset.bound='1'; btn.addEventListener('click', (event) => { event.stopPropagation(); btn.textContent = 'Approved'; btn.disabled = true; const status=btn.closest('.decision')?.querySelector('.status'); if(status) { status.textContent='Approved'; status.className='status green'; } showToast('Decision approved'); }); });
@@ -562,6 +544,20 @@
     }
     bindInteractions();
     document.querySelector('.chat-composer')?.addEventListener('submit', (event) => { event.preventDefault(); const input = event.currentTarget.querySelector('input'); if (!input?.value.trim()) return; const thread = document.querySelector('.chat-thread'); thread?.insertAdjacentHTML('beforeend', `<div class="message user"><small>You</small>${input.value}</div><div class="message ai"><small>COS-IG</small>I checked the connected Supabase dashboard context. The next best action is to protect ROAS, clear approvals, and prioritize the highest-intent enrollment channels.</div>`); input.value=''; thread.scrollTop = thread.scrollHeight; });
+
+    async function loadAdminAccounts() {
+      const list = document.getElementById('adminAccountsList');
+      if (!list) return;
+      try {
+        const res = await fetch('/api/ig/accounts');
+        const data = await res.json();
+        list.innerHTML = (data.accounts || []).map(account => `<div class="row"><strong>${escapeHtml(account.name)}</strong><button class="export" data-view-account="${escapeHtml(account.slug)}">View as ${escapeHtml(account.name.split(' ')[0])}</button></div>`).join('');
+        document.querySelectorAll('[data-view-account]').forEach(button => button.addEventListener('click', () => {
+          localStorage.setItem('igViewAccount', button.dataset.viewAccount);
+          showToast(`Viewing as ${button.textContent.replace('View as ', '')}`);
+        }));
+      } catch (error) { list.innerHTML = '<div class="row"><strong>Unable to load accounts</strong><span>Try again</span></div>'; }
+    }
     async function loadDashboardData() {
       try {
         const res = await fetch(`${SUPABASE_URL}/rest/v1/docs?slug=eq.${encodeURIComponent(DATA_SLUG)}&select=body_md`, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
@@ -572,6 +568,9 @@
         document.querySelectorAll('.source-pill').forEach(el => el.textContent = `Supabase connected · updated ${new Date(data.updatedAt || Date.now()).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}`);
       } catch (error) { console.warn('Supabase dashboard data unavailable', error); }
     }
+    loadAccount();
+    loadPrOpportunities();
+    loadAdminAccounts();
     loadDashboardData();
   </script>
 
