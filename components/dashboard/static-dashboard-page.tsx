@@ -181,6 +181,67 @@ export function StaticDashboardPage({ dashboard, account }: StaticDashboardPageP
     if (profileName) profileName.textContent = currentAccount.name;
     if (profileTitle) profileTitle.textContent = currentAccount.title;
 
+    if (profileCard instanceof HTMLElement) {
+      profileCard.style.paddingRight = "52px";
+    }
+
+    if (profileCard && !profileCard.querySelector(".profile-settings")) {
+      const settingsWrap = document.createElement("div");
+      settingsWrap.className = "profile-settings";
+      settingsWrap.setAttribute(
+        "style",
+        "position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:5;"
+      );
+
+      const settingsButton = document.createElement("button");
+      settingsButton.type = "button";
+      settingsButton.setAttribute("aria-label", "Profile settings");
+      settingsButton.innerHTML = "⚙";
+      settingsButton.setAttribute(
+        "style",
+        "width:30px;height:30px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.10);color:rgba(255,255,255,.78);display:grid;place-items:center;cursor:pointer;transition:.18s ease;font-size:14px;"
+      );
+
+      const menu = document.createElement("div");
+      menu.setAttribute(
+        "style",
+        "display:none;position:absolute;right:0;bottom:38px;min-width:132px;padding:6px;border-radius:14px;background:rgba(255,255,255,.94);border:1px solid rgba(14,29,52,.08);box-shadow:0 18px 44px rgba(14,29,52,.18);"
+      );
+
+      const logoutButton = document.createElement("button");
+      logoutButton.type = "button";
+      logoutButton.textContent = "Log out";
+      logoutButton.setAttribute(
+        "style",
+        "width:100%;border:0;border-radius:10px;background:transparent;color:#0E1D34;padding:9px 10px;text-align:left;font:inherit;font-size:12px;font-weight:800;cursor:pointer;"
+      );
+
+      settingsButton.addEventListener("mouseenter", () => {
+        settingsButton.style.background = "rgba(255,255,255,.20)";
+        settingsButton.style.color = "#fff";
+      });
+      settingsButton.addEventListener("mouseleave", () => {
+        settingsButton.style.background = "rgba(255,255,255,.10)";
+        settingsButton.style.color = "rgba(255,255,255,.78)";
+      });
+      settingsButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        menu.style.display = menu.style.display === "none" ? "block" : "none";
+      });
+      logoutButton.addEventListener("click", async () => {
+        await fetch("/api/ig/auth/logout", { method: "POST" });
+        window.localStorage.removeItem("igAccount");
+        window.localStorage.removeItem("igViewAccount");
+        setCurrentAccount(null);
+        window.location.href = "/dashboard";
+      });
+
+      menu.appendChild(logoutButton);
+      settingsWrap.appendChild(menu);
+      settingsWrap.appendChild(settingsButton);
+      profileCard.appendChild(settingsWrap);
+    }
+
     if (!dashboard.script.trim()) return;
     const runDashboardScript = new Function(dashboard.script);
     runDashboardScript();

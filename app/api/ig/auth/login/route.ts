@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { findAccountByEmail, publicAccount, setSessionCookie } from "@/lib/ig-auth";
+import { findAccountByEmail, isValidPassword, publicAccount, setSessionCookie } from "@/lib/ig-auth";
 
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   const password = String(body?.password || "");
   const account = findAccountByEmail(email);
 
-  if (!account || account.password !== password) {
+  if (!account || !isValidPassword(account, password)) {
     return NextResponse.json({ error: "Invalid email or password." }, { status: 401 });
   }
 

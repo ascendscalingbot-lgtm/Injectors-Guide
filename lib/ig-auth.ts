@@ -13,13 +13,17 @@ export type SessionAccount = {
   imageUrl: string;
 };
 
+type AccountConfig = SessionAccount & {
+  passwordEnv: string;
+};
+
 export const IG_SESSION_COOKIE = "ig_dashboard_session";
 
-export const TEMP_ACCOUNTS: Record<AccountSlug, SessionAccount & { password: string }> = {
+export const TEMP_ACCOUNTS: Record<AccountSlug, AccountConfig> = {
   "traci-andreason": {
     slug: "traci-andreason",
     email: "traci@injectorsguide.co",
-    password: "REMOVED_SECRET_TRACI",
+    passwordEnv: "IG_DASHBOARD_PASSWORD_TRACI",
     name: "Traci Andreason",
     role: "client",
     title: "Founder and CEO",
@@ -28,7 +32,7 @@ export const TEMP_ACCOUNTS: Record<AccountSlug, SessionAccount & { password: str
   "shayan-samimi": {
     slug: "shayan-samimi",
     email: "shayan@ascendscaling.com",
-    password: "REMOVED_SECRET_SHAYAN",
+    passwordEnv: "IG_DASHBOARD_PASSWORD_SHAYAN",
     name: "Shayan Samimi",
     role: "admin",
     title: "Growth Partner",
@@ -36,7 +40,7 @@ export const TEMP_ACCOUNTS: Record<AccountSlug, SessionAccount & { password: str
   }
 };
 
-export function publicAccount(account: SessionAccount & { password?: string }): SessionAccount {
+export function publicAccount(account: AccountConfig): SessionAccount {
   return {
     slug: account.slug,
     email: account.email,
@@ -52,6 +56,11 @@ export function findAccountByEmail(email: string) {
   return Object.values(TEMP_ACCOUNTS).find((account) => account.email.toLowerCase() === normalized) || null;
 }
 
+export function isValidPassword(account: AccountConfig, password: string) {
+  const configuredPassword = process.env[account.passwordEnv];
+  return Boolean(configuredPassword) && password === configuredPassword;
+}
+
 export async function getSessionAccount(): Promise<SessionAccount | null> {
   const cookieStore = await cookies();
   const slug = cookieStore.get(IG_SESSION_COOKIE)?.value as AccountSlug | undefined;
@@ -63,7 +72,7 @@ export function setSessionCookie(response: NextResponse, slug: AccountSlug) {
   response.cookies.set(IG_SESSION_COOKIE, slug, {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.VERCEL === "1",
     path: "/",
     maxAge: 60 * 60 * 12
   });
@@ -73,7 +82,7 @@ export function clearSessionCookie(response: NextResponse) {
   response.cookies.set(IG_SESSION_COOKIE, "", {
     httpOnly: true,
     sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
+    secure: process.env.VERCEL === "1",
     path: "/",
     maxAge: 0
   });
