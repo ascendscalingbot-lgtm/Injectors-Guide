@@ -19,10 +19,23 @@ export type IgAccount = {
 export type PrOpportunity = {
   id: string;
   title: string;
+  outlet?: string;
   contact: string;
+  journalist?: string;
+  email?: string;
+  angle?: string;
+  docUrl?: string;
+  placementUrl?: string;
+  publication?: string;
+  priority?: string;
+  dueDate?: string;
+  publishedAt?: string;
   stage: string;
   notes: string;
   status: "in_flight" | "landed";
+  approvedAt?: string;
+  approvedBy?: string;
+  updatedAt?: string;
   createdBy: string;
   createdAt: string;
 };

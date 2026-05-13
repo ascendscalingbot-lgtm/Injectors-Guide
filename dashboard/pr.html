@@ -216,7 +216,7 @@
     .ops-pill { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,0.66); border: 1px solid rgba(14,29,52,0.08); color: var(--ink); font-size: 11px; font-weight: 700; white-space: nowrap; box-shadow: 0 12px 28px rgba(14,29,52,0.08); }
     .topbar-right { display: flex; flex-direction: column; align-items: center; gap: 3px; text-align: center; }
     .top-actions { width: 100%; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; }
-    .action-btn { border: 0; border-radius: 999px; background: var(--ink); color: #fff; font: inherit; font-size: 12px; font-weight: 800; min-height: 30px; padding: 0 12px; cursor: pointer; box-shadow: 0 12px 28px rgba(14,29,52,0.12); }
+    .action-btn { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 0; border-radius: 999px; background: var(--ink); color: #fff; font: inherit; font-size: 12px; font-weight: 800; min-height: 30px; padding: 0 12px; cursor: pointer; box-shadow: 0 12px 28px rgba(14,29,52,0.12); }
     .ghost-btn { background: rgba(255,255,255,0.68); color: var(--ink); border: 1px solid rgba(14,29,52,0.08); }
     .source-pill { color: rgba(14,29,52,0.48); font-size: 9px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; text-align: center; }
     .ops-pill span { position: relative; width: 9px; height: 9px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 1px rgba(47,159,107,0.28), 0 0 14px rgba(47,159,107,0.52); }
@@ -374,13 +374,88 @@
     .prompt-chip { display: block; width: 100%; text-align: left; border: 1px solid rgba(14,29,52,0.08); background: rgba(255,255,255,0.62); border-radius: 18px; padding: 12px; color: var(--ink); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
     .prompt-chip + .prompt-chip { margin-top: 9px; }
 
+
+    .pr-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(360px, .85fr); gap: 18px; align-items: start; }
+    .pr-stack { display: grid; gap: 18px; }
+    .pr-board { padding: 18px 22px 22px; display: grid; gap: 12px; }
+    .pr-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      padding: 15px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid rgba(14,29,52,0.075);
+      box-shadow: 0 12px 28px rgba(14,29,52,0.055);
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .pr-card:hover, .pr-card.active { transform: translateY(-2px); border-color: rgba(45,110,247,.24); box-shadow: 0 20px 46px rgba(14,29,52,0.10); }
+    .pr-card-main { min-width: 0; }
+    .pr-title-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .pr-title-row strong { font-size: 14px; line-height: 1.25; }
+    .pr-meta { margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .pr-angle { margin-top: 9px; color: rgba(14,29,52,.76); font-size: 12px; line-height: 1.5; }
+    .pr-card-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+    .ui-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 34px;
+      border: 1px solid rgba(14,29,52,0.09);
+      border-radius: 999px;
+      padding: 0 12px;
+      background: rgba(255,255,255,0.72);
+      color: var(--ink);
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(14,29,52,0.06);
+      transition: .18s ease;
+    }
+    .ui-btn:hover { transform: translateY(-1px); box-shadow: 0 16px 30px rgba(14,29,52,0.10); }
+    .ui-btn.primary { background: var(--ink); color: white; border-color: var(--ink); }
+    .ui-btn.blue { background: var(--blue); color: white; border-color: var(--blue); }
+    .ui-btn.success { background: var(--green); color: white; border-color: var(--green); }
+    .ui-btn.ghost { background: rgba(255,255,255,.52); }
+    .ui-btn svg { width: 14px; height: 14px; stroke-width: 2.4; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 8px; border-radius: 999px; font-size: 10px; font-weight: 800; letter-spacing: .4px; text-transform: uppercase; }
+    .pill.review { color: #8a5a00; background: rgba(199,151,45,.15); }
+    .pill.approved { color: var(--green); background: rgba(47,159,107,.12); }
+    .pill.draft { color: var(--blue); background: rgba(45,110,247,.10); }
+    .pill.published { color: var(--green); background: rgba(47,159,107,.12); }
+    .pill.changes { color: var(--red); background: rgba(217,75,93,.10); }
+    .detail-card { padding: 22px; }
+    .detail-kicker { color: var(--muted); font-size: 10px; font-weight: 900; letter-spacing: 1.4px; text-transform: uppercase; }
+    .detail-title { margin-top: 8px; font-family: "Newsreader", serif; font-size: 32px; line-height: .98; letter-spacing: -1px; font-style: italic; font-weight: 500; }
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+    .detail-field { padding: 12px; border-radius: 16px; background: rgba(255,255,255,.58); border: 1px solid rgba(14,29,52,.07); }
+    .detail-field small { display: block; color: var(--muted); font-size: 9px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+    .detail-field strong { display: block; margin-top: 5px; font-size: 12px; line-height: 1.35; }
+    .detail-notes { margin-top: 12px; padding: 14px; border-radius: 18px; background: rgba(14,29,52,.045); color: rgba(14,29,52,.74); font-size: 13px; line-height: 1.55; }
+    .detail-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .placement-row { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 10px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .placement-row:last-child { border-bottom: 0; }
+    .placement-row strong { display: block; font-size: 13px; }
+    .placement-row span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; }
+    .admin-tools { display: none; }
+    body[data-role="admin"] .admin-tools { display: inline-flex; }
+    .pr-empty { padding: 22px; color: var(--muted); font-size: 13px; text-align: center; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+    .modal .full { grid-column: 1 / -1; }
+    .modal input:focus, .modal textarea:focus, .modal select:focus { border-color: rgba(45,110,247,.46); box-shadow: 0 0 0 4px rgba(45,110,247,.10); }
+
     @media (max-width: 1180px) {
       .shell { grid-template-columns: 1fr; }
       .sidebar { position: relative; top: 0; height: auto; }
       .nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .agent-card { margin-top: 18px; }
       .metric-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .grid, .module-grid { grid-template-columns: 1fr; }
+      .grid, .module-grid, .pr-layout { grid-template-columns: 1fr; }
     }
 
 
@@ -449,57 +524,173 @@
       <header class="topbar">
         <div>
           <h1>PR Tracker</h1>
+          <p class="title-kicker" style="text-align:left; margin-top:8px;">Pitches · approvals · placements · backlinks</p>
         </div>
-        <div class="topbar-right">
-          <div class="top-actions"><div class="ops-pill"><span></span> All Systems Operational</div><button class="action-btn" id="addPrButton" data-modal="create" data-kind="PR pitch" hidden>Add PR Opportunity</button></div>
-          <p class="title-kicker source-pill">Pitches · placements · backlinks</p>
+        <div class="topbar-right admin-tools">
+          <button class="action-btn" id="addPrButton" data-modal="create" data-kind="PR opportunity" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" width="14" height="14" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-width="2.5" stroke-linecap="round"/></svg>
+            Add PR Opportunity
+          </button>
         </div>
       </header>
-      <section class="grid"><article class="card"><div class="card-header"><div><h2>Pitches In Flight</h2><p>Outlet, journalist, angle, status, and follow-up date.</p></div></div><div class="module-list" id="prInFlightList"><div class="row"><strong>Loading PR opportunities…</strong><span>Supabase</span></div></div></article><article class="card"><div class="card-header"><div><h2>Placements Landed</h2><p>Track completed placements and confirmed wins.</p></div></div><div class="module-list" id="prLandedList"><div class="row"><strong>Loading placements…</strong><span>Supabase</span></div></div></article></section>
+
+      <section class="pr-layout">
+        <article class="card">
+          <div class="card-header">
+            <div>
+              <h2>Pitches In Flight</h2>
+              <p>Review-ready pitches open the Google Doc preview and can be approved directly from the list or detail view.</p>
+            </div>
+          </div>
+          <div class="pr-board" id="prInFlightList">
+            <div class="pr-empty">Loading PR opportunities…</div>
+          </div>
+        </article>
+
+        <div class="pr-stack">
+          <article class="card detail-card" id="prDetailCard">
+            <div class="detail-kicker">Selected pitch</div>
+            <div class="detail-title">Choose a pitch</div>
+            <div class="detail-notes">Click any pitch in flight to see the outlet, journalist, angle, document link, approval controls, and next action.</div>
+          </article>
+
+          <article class="card">
+            <div class="card-header">
+              <div>
+                <h2>Placements Landed</h2>
+                <p>Confirmed wins. Admin can edit placement URL, publication, and publish date.</p>
+              </div>
+            </div>
+            <div class="module-list" id="prLandedList">
+              <div class="pr-empty">Loading placements…</div>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
   </div>
-
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
       <h2 id="modalTitle">Add PR Opportunity</h2>
-      <p id="modalCopy">Create a focused PR opportunity. It updates this page immediately and is structured for Supabase persistence.</p>
-      <form id="modalForm" data-kind="PR opportunity">
-        <label><span>Title</span><input name="title" placeholder="Outlet / pitch title" required></label>
-        <label><span>Contact / reporter</span><input name="meta" placeholder="Contact / reporter"></label>
-        <label><span>Stage</span><select name="stage"><option>Idea</option><option>Draft</option><option>Review</option><option>Approved</option><option>Rejected</option><option>Published</option></select></label>
-        <label><span>Notes</span><textarea name="notes" placeholder="Context, next action, owner, or approval notes"></textarea></label>
-        <div class="modal-actions"><button type="button" class="action-btn ghost-btn" data-close>Cancel</button><button type="submit" class="action-btn">Save</button></div>
+      <p id="modalCopy">Create a specialized PR opportunity with the exact fields needed for pitching, review, and placement tracking.</p>
+      <form id="modalForm" data-mode="create">
+        <input type="hidden" name="id">
+        <div class="form-grid">
+          <label class="full"><span>Pitch title</span><input name="title" placeholder="ER burnout to medspa career feature" required></label>
+          <label><span>Outlet</span><input name="outlet" placeholder="Nurse.org, Beauty Independent, Forbes"></label>
+          <label><span>Journalist / contact</span><input name="journalist" placeholder="Editor or reporter name"></label>
+          <label><span>Contact email</span><input name="email" type="email" placeholder="editor@publication.com"></label>
+          <label><span>Priority</span><select name="priority"><option>High</option><option selected>Medium</option><option>Low</option></select></label>
+          <label><span>Stage</span><select name="stage"><option>Idea</option><option>Drafting</option><option>In Review</option><option>Approved</option><option>Changes Requested</option><option>Outreach Sent</option><option>Follow Up</option><option>Published</option></select></label>
+          <label><span>Review doc URL</span><input name="docUrl" placeholder="https://docs.google.com/document/d/..."></label>
+          <label><span>Follow-up / publish date</span><input name="dueDate" type="date"></label>
+          <label class="full"><span>Pitch angle</span><textarea name="angle" placeholder="What makes this timely, credible, and useful for the publication’s audience?"></textarea></label>
+          <label class="full"><span>Internal notes / next action</span><textarea name="notes" placeholder="What needs to happen next? Any claims to verify? Any client context?"></textarea></label>
+          <label><span>Placement URL</span><input name="placementUrl" placeholder="Published article URL"></label>
+          <label><span>Publication name</span><input name="publication" placeholder="Publication / section"></label>
+        </div>
+        <div class="modal-actions"><button type="button" class="action-btn ghost-btn" data-close>Cancel</button><button type="submit" class="action-btn">Save PR Opportunity</button></div>
       </form>
     </div>
   </div>
-  <div class="toast" id="toast">Saved to dashboard queue</div>
+  <div class="toast" id="toast">Saved</div>
   <script>
-    const SUPABASE_URL = 'https://cmtvqqfofegbzzfmrvbv.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNtdHZxcWZvZmVnYnp6Zm1ydmJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk4MzIwMzUsImV4cCI6MjA4NTQwODAzNX0.cEEUBEFnew06U8CtL0eB1hs1kAGN5Frmie1fybX1Dzc';
-    const DATA_SLUG = 'injectors-guide/dashboard-data';
     const modal = document.getElementById('modalBackdrop');
     const toast = document.getElementById('toast');
     const modalTitle = document.getElementById('modalTitle');
+    const modalCopy = document.getElementById('modalCopy');
     const modalForm = document.getElementById('modalForm');
-    const firstInput = modalForm?.querySelector('input[name="title"]');
-    function showToast(text) { if (!toast) return; toast.textContent = text; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200); }
-    function openModal(kind = 'item', title = '') { if (modalTitle && title) modalTitle.textContent = title; modalForm?.setAttribute('data-kind', kind); modal?.classList.add('open'); }
-    document.querySelectorAll('[data-modal]').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.kind || 'item')));
+    const selectedAccount = localStorage.getItem('igAccount') || 'traci-andreason';
+    let prItems = [];
+    let selectedPrId = null;
+    const iconPlus = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>';
+    const iconDoc = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg>';
+    const iconCheck = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M20 6 9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const iconEdit = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+
+    function escapeHtml(value) { return String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
+    function normalizeStage(stage='Idea') { return String(stage).toLowerCase().replace(/\s+/g, '-'); }
+    function isReviewStage(item) { return ['in-review', 'review', 'changes-requested'].includes(normalizeStage(item.stage)); }
+    function canOpenDoc(item) { return Boolean(item.docUrl); }
+    function showToast(text) { if (!toast) return; toast.textContent = text; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2300); }
+    function openModal(mode = 'create', item = null) {
+      modalForm.reset();
+      modalForm.dataset.mode = mode;
+      modalTitle.textContent = mode === 'edit' ? 'Edit PR Opportunity' : 'Add PR Opportunity';
+      modalCopy.textContent = mode === 'edit' ? 'Update the PR opportunity, review doc, stage, or landed placement details.' : 'Create a specialized PR opportunity with pitching, review, approval, and placement fields.';
+      if (item) {
+        Object.entries(item).forEach(([key, value]) => { const input = modalForm.elements[key]; if (input) input.value = value || ''; });
+      }
+      modal?.classList.add('open');
+    }
+    document.querySelectorAll('[data-modal]').forEach(btn => btn.addEventListener('click', () => openModal('create')));
     document.querySelectorAll('[data-close]').forEach(btn => btn.addEventListener('click', () => modal?.classList.remove('open')));
     modal?.addEventListener('click', (event) => { if (event.target === modal) modal.classList.remove('open'); });
-    function getSelectedAccount() {
-      return localStorage.getItem('igAccount') || 'traci-andreason';
+
+    function renderStage(stage) {
+      const key = normalizeStage(stage);
+      const cls = key.includes('review') ? 'review' : key.includes('approved') ? 'approved' : key.includes('published') ? 'published' : key.includes('changes') ? 'changes' : 'draft';
+      return `<span class="pill ${cls}">${escapeHtml(stage || 'Idea')}</span>`;
     }
-    const selectedAccount = getSelectedAccount();
-    function escapeHtml(value) { return String(value || '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char])); }
+
+    function renderPitchCard(item) {
+      const docButton = canOpenDoc(item) && isReviewStage(item) ? `<a class="ui-btn blue" href="${escapeHtml(item.docUrl)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${iconDoc} View Doc</a>` : '';
+      const approveButton = isReviewStage(item) ? `<button class="ui-btn success" data-approve="${escapeHtml(item.id)}" onclick="event.stopPropagation()">${iconCheck} Approve</button>` : '';
+      const adminEdit = `<button class="ui-btn ghost admin-tools" data-edit="${escapeHtml(item.id)}" onclick="event.stopPropagation()">${iconEdit} Edit</button>`;
+      return `<div class="pr-card ${selectedPrId === item.id ? 'active' : ''}" data-select-pr="${escapeHtml(item.id)}">
+        <div class="pr-card-main">
+          <div class="pr-title-row"><strong>${escapeHtml(item.title)}</strong>${renderStage(item.stage)}</div>
+          <div class="pr-meta">${escapeHtml(item.outlet || item.publication || 'Target outlet')} · ${escapeHtml(item.journalist || item.contact || 'Contact TBD')} · ${escapeHtml(item.priority || 'Medium')} priority</div>
+          <div class="pr-angle">${escapeHtml(item.angle || item.notes || 'No pitch angle added yet.')}</div>
+        </div>
+        <div class="pr-card-actions">${docButton}${approveButton}${adminEdit}</div>
+      </div>`;
+    }
+
+    function renderPlacementRow(item) {
+      const open = item.placementUrl ? `<a class="ui-btn ghost" href="${escapeHtml(item.placementUrl)}" target="_blank" rel="noopener">View</a>` : '';
+      const edit = `<button class="ui-btn ghost admin-tools" data-edit="${escapeHtml(item.id)}">${iconEdit} Edit</button>`;
+      return `<div class="placement-row"><div><strong>${escapeHtml(item.publication || item.outlet || item.title)}</strong><span>${escapeHtml(item.title)} · ${escapeHtml(item.publishedAt || item.dueDate || 'Published')}</span></div><div class="pr-card-actions">${open}${edit}</div></div>`;
+    }
+
+    function renderDetail(item) {
+      const detail = document.getElementById('prDetailCard');
+      if (!detail) return;
+      if (!item) {
+        detail.innerHTML = '<div class="detail-kicker">Selected pitch</div><div class="detail-title">Choose a pitch</div><div class="detail-notes">Click any pitch in flight to see more information.</div>';
+        return;
+      }
+      const docButton = item.docUrl ? `<a class="ui-btn blue" href="${escapeHtml(item.docUrl)}" target="_blank" rel="noopener">${iconDoc} Open Google Doc</a>` : '';
+      const approveButton = isReviewStage(item) ? `<button class="ui-btn success" data-approve="${escapeHtml(item.id)}">${iconCheck} Approve Pitch</button>` : '';
+      const editButton = `<button class="ui-btn ghost admin-tools" data-edit="${escapeHtml(item.id)}">${iconEdit} Edit Details</button>`;
+      detail.innerHTML = `<div class="detail-kicker">${escapeHtml(item.outlet || 'PR opportunity')}</div><div class="detail-title">${escapeHtml(item.title)}</div><div style="margin-top:10px">${renderStage(item.stage)}</div>
+        <div class="detail-grid">
+          <div class="detail-field"><small>Journalist</small><strong>${escapeHtml(item.journalist || item.contact || 'TBD')}</strong></div>
+          <div class="detail-field"><small>Priority</small><strong>${escapeHtml(item.priority || 'Medium')}</strong></div>
+          <div class="detail-field"><small>Due / follow-up</small><strong>${escapeHtml(item.dueDate || 'Not set')}</strong></div>
+          <div class="detail-field"><small>Contact</small><strong>${escapeHtml(item.email || item.contact || 'Not set')}</strong></div>
+        </div>
+        <div class="detail-notes"><strong>Pitch angle:</strong><br>${escapeHtml(item.angle || 'No angle added yet.')}<br><br><strong>Notes:</strong><br>${escapeHtml(item.notes || 'No notes yet.')}</div>
+        <div class="detail-actions">${docButton}${approveButton}${editButton}</div>`;
+    }
+
+    function bindPrActions() {
+      document.querySelectorAll('[data-select-pr]').forEach(card => card.addEventListener('click', () => { selectedPrId = card.dataset.selectPr; renderPrItems(prItems); }));
+      document.querySelectorAll('[data-approve]').forEach(btn => btn.addEventListener('click', () => updatePr(btn.dataset.approve, { action: 'approve' }, 'Pitch approved')));
+      document.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => { const item = prItems.find(i => i.id === btn.dataset.edit); if (item) openModal('edit', item); }));
+    }
+
     function renderPrItems(items = []) {
+      prItems = items;
       const inFlight = items.filter(item => item.status !== 'landed');
       const landed = items.filter(item => item.status === 'landed');
-      const renderRow = item => `<div class="row"><strong>${escapeHtml(item.title)}</strong><span>${escapeHtml(item.stage || item.contact || 'Live')}</span></div>`;
-      const empty = '<div class="row"><strong>No items yet</strong><span>Ready</span></div>';
-      document.getElementById('prInFlightList').innerHTML = inFlight.length ? inFlight.map(renderRow).join('') : empty;
-      document.getElementById('prLandedList').innerHTML = landed.length ? landed.map(renderRow).join('') : empty;
+      if (!selectedPrId && inFlight[0]) selectedPrId = inFlight[0].id;
+      document.getElementById('prInFlightList').innerHTML = inFlight.length ? inFlight.map(renderPitchCard).join('') : '<div class="pr-empty">No active pitches yet. Admin can add the first PR opportunity.</div>';
+      document.getElementById('prLandedList').innerHTML = landed.length ? landed.map(renderPlacementRow).join('') : '<div class="pr-empty">No placements landed yet.</div>';
+      renderDetail(items.find(item => item.id === selectedPrId) || inFlight[0]);
+      bindPrActions();
     }
+
     async function loadAccount() {
       try {
         const res = await fetch(`/api/ig/accounts?account=${encodeURIComponent(selectedAccount)}`);
@@ -512,43 +703,37 @@
         const res = await fetch('/api/ig/pr');
         const data = await res.json();
         renderPrItems(data.items || []);
-      } catch (error) { console.warn('PR opportunities unavailable', error); }
+      } catch (error) {
+        console.warn('PR opportunities unavailable', error);
+        document.getElementById('prInFlightList').innerHTML = '<div class="pr-empty">Could not load PR opportunities.</div>';
+      }
+    }
+    async function updatePr(id, payload, successText = 'Saved') {
+      try {
+        const res = await fetch('/api/ig/pr', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, ...payload }) });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Unable to update PR opportunity');
+        renderPrItems(data.items || []);
+        showToast(successText);
+      } catch (error) { showToast(error.message || 'Unable to save'); }
     }
     modalForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const title = firstInput?.value?.trim() || 'Untitled PR opportunity';
-      const contact = modalForm?.querySelector('[name="meta"]')?.value?.trim() || 'New contact';
-      const stage = modalForm?.querySelector('[name="stage"]')?.value || 'Idea';
-      const notes = modalForm?.querySelector('[name="notes"]')?.value?.trim() || '';
+      const values = Object.fromEntries(new FormData(modalForm).entries());
+      const mode = modalForm.dataset.mode || 'create';
+      const stage = values.stage || 'Idea';
+      const payload = { ...values, contact: values.journalist || values.email || values.outlet || 'New contact', status: stage === 'Published' ? 'landed' : 'in_flight' };
       try {
-        const res = await fetch('/api/ig/pr', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ account: selectedAccount, title, contact, stage, notes, status: stage === 'Published' ? 'landed' : 'in_flight' }) });
+        const res = await fetch('/api/ig/pr', { method: mode === 'edit' ? 'PATCH' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || 'Unable to save PR opportunity');
         renderPrItems(data.items || []);
-        modal?.classList.remove('open'); modalForm.reset(); showToast('Saved to Supabase');
+        modal?.classList.remove('open');
+        showToast(mode === 'edit' ? 'PR opportunity updated' : 'PR opportunity added');
       } catch (error) { showToast(error.message || 'Unable to save'); }
     });
-    function bindInteractions() {
-      document.querySelectorAll('.actions .approve').forEach(btn => { if (btn.dataset.bound) return; btn.dataset.bound='1'; btn.addEventListener('click', (event) => { event.stopPropagation(); btn.textContent = 'Approved'; btn.disabled = true; const status=btn.closest('.decision')?.querySelector('.status'); if(status) { status.textContent='Approved'; status.className='status green'; } showToast('Decision approved'); }); });
-      document.querySelectorAll('.actions button').forEach(btn => { if (btn.dataset.boundAny) return; btn.dataset.boundAny='1'; if(btn.classList.contains('approve')) return; btn.addEventListener('click', (event) => { event.stopPropagation(); if(btn.textContent.trim()==='Reject') { const status=btn.closest('.decision')?.querySelector('.status'); if(status) { status.textContent='Rejected'; status.className='status red'; } showToast('Decision rejected'); } else { openModal('approval edit', 'Edit Approval'); if (firstInput) firstInput.value = btn.closest('.decision')?.querySelector('strong')?.textContent || '';  } }); });
-      document.querySelectorAll('.task').forEach(task => { if (task.dataset.bound) return; task.dataset.bound='1'; task.draggable = true; task.addEventListener('dragstart', () => task.classList.add('dragging')); task.addEventListener('dragend', () => task.classList.remove('dragging')); });
-      document.querySelectorAll('.lane').forEach(lane => { if (lane.dataset.bound) return; lane.dataset.bound='1'; lane.addEventListener('dragover', (event) => { event.preventDefault(); const task = document.querySelector('.task.dragging'); if (task) lane.appendChild(task); }); });
-    }
-    bindInteractions();
-    document.querySelector('.chat-composer')?.addEventListener('submit', (event) => { event.preventDefault(); const input = event.currentTarget.querySelector('input'); if (!input?.value.trim()) return; const thread = document.querySelector('.chat-thread'); thread?.insertAdjacentHTML('beforeend', `<div class="message user"><small>You</small>${input.value}</div><div class="message ai"><small>COS-IG</small>I checked the connected Supabase dashboard context. The next best action is to protect ROAS, clear approvals, and prioritize the highest-intent enrollment channels.</div>`); input.value=''; thread.scrollTop = thread.scrollHeight; });
-    async function loadDashboardData() {
-      try {
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/docs?slug=eq.${encodeURIComponent(DATA_SLUG)}&select=body_md`, { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } });
-        const rows = await res.json();
-        const data = rows?.[0]?.body_md ? JSON.parse(rows[0].body_md) : null;
-        if (!data) return;
-        Object.entries(data.metrics || {}).forEach(([key, value]) => { const el = document.querySelector(`[data-metric="${key}"]`); if (el) el.textContent = value; });
-        document.querySelectorAll('.source-pill').forEach(el => el.textContent = `Supabase connected · updated ${new Date(data.updatedAt || Date.now()).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'})}`);
-      } catch (error) { console.warn('Supabase dashboard data unavailable', error); }
-    }
     loadAccount();
     loadPrOpportunities();
-    loadDashboardData();
   </script>
 
 </body>
