@@ -25,6 +25,19 @@ The workspace was empty at initialization and has now been converted into a Verc
 
 Run `npm install` and `npm run dev` to view the dashboard locally.
 
+## AI Chat
+
+The dashboard AI tab posts to `/api/cos-chat`, which keeps the OpenAI key on the server and loads the Injectors Guide business context from `instructions/`, `context/`, `operations/`, and the dashboard data foundation.
+
+Required production variable:
+
+- `OPENAI_API_KEY` - server-only OpenAI API key.
+
+Optional variables:
+
+- `OPENAI_MODEL` - defaults to `gpt-5.4-mini`.
+- `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, and `NEXT_PUBLIC_SUPABASE_ANON_KEY` - used by the existing dashboard data/auth helpers.
+
 ## Deployment Blockers
 
 - Local npm install is currently blocked by DNS/network access to `registry.npmjs.org`.

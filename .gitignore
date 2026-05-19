@@ -3,6 +3,11 @@ node_modules/
 .next/
 out/
 package-lock.json
+.npm-cache/
+dev-server*.log
+Injectors-Guide-ai-chat.patch
+codex_injectors_guide_*
+github_known_hosts
 
 # Local machine-only files.
 .ssh/
