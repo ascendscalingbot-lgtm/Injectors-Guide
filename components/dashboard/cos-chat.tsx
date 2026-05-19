@@ -39,15 +39,21 @@ export function CosChat() {
 
     setInput("");
     setIsPending(true);
-    setMessages((current) => [...current, { role: "you", content: prompt }]);
+    const nextMessages: Message[] = [...messages, { role: "you", content: prompt }];
+    setMessages(nextMessages);
 
     try {
       const response = await fetch("/api/cos-chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt })
+        body: JSON.stringify({
+          messages: nextMessages.map((message) => ({
+            role: message.role === "cos" ? "assistant" : "user",
+            content: message.content
+          }))
+        })
       });
-      const data = (await response.json()) as { answer?: string };
+      const data = (await response.json()) as { answer?: string; productionAiConnected?: boolean };
       setMessages((current) => [
         ...current,
         {
@@ -76,7 +82,7 @@ export function CosChat() {
       <div className="flex items-center justify-between gap-3 border-b px-5 py-4">
         <div>
           <p className="text-sm font-bold text-foreground">COS-IG Chat</p>
-          <p className="text-xs text-muted-foreground">Connected to dashboard context</p>
+          <p className="text-xs text-muted-foreground">Connected to OpenAI + dashboard context</p>
         </div>
         <Badge variant="muted">Read + recommend</Badge>
       </div>

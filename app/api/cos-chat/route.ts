@@ -1,43 +1,170 @@
 import { NextResponse } from "next/server";
-import { dashboardData } from "@/lib/dashboard-data";
+import { buildCosIgInstructions } from "@/lib/cos-ig-context";
+import { getSessionAccount } from "@/lib/ig-auth";
+
+type IncomingRole = "assistant" | "cos" | "user" | "you";
+
+type IncomingMessage = {
+  role?: IncomingRole;
+  content?: string;
+};
+
+type NormalizedMessage = {
+  role: "assistant" | "user";
+  content: string;
+};
 
 type ChatRequest = {
   prompt?: string;
+  messages?: IncomingMessage[];
 };
 
-function buildAnswer(prompt: string) {
-  const lower = prompt.toLowerCase();
+const OPENAI_MODEL = process.env.OPENAI_MODEL || "gpt-5.4-mini";
+const MAX_MESSAGES = 14;
+const MAX_MESSAGE_CHARS = 2400;
 
-  if (lower.includes("blocker") || lower.includes("blocked") || lower.includes("need")) {
-    return `Top blockers: ${dashboardData.blockers.slice(0, 4).join("; ")}. I would clear Stripe and Meta first because they unlock revenue truth and paid media control.`;
+function normalizeMessage(message: IncomingMessage): NormalizedMessage | null {
+  const content = String(message.content || "").trim().slice(0, MAX_MESSAGE_CHARS);
+  if (!content) return null;
+
+  return {
+    role: message.role === "assistant" || message.role === "cos" ? "assistant" : "user",
+    content
+  };
+}
+
+function buildConversation(body: ChatRequest) {
+  const history = Array.isArray(body.messages)
+    ? body.messages.map(normalizeMessage).filter((message): message is NormalizedMessage => Boolean(message))
+    : [];
+  const prompt = String(body.prompt || "").trim();
+
+  if (prompt) {
+    history.push({ role: "user", content: prompt.slice(0, MAX_MESSAGE_CHARS) });
   }
 
-  if (lower.includes("feature") || lower.includes("upgrade") || lower.includes("suggest")) {
-    return `Highest-leverage feature upgrade: ${dashboardData.featureUpgrades[0].title}. It creates a daily approve/deny loop so dashboard improvements can compound without making Traci manage the details.`;
+  return history.slice(-MAX_MESSAGES).map((message) => ({
+    role: message.role,
+    content: message.content
+  }));
+}
+
+function transcriptFromMessages(messages: ReturnType<typeof buildConversation>) {
+  return messages
+    .map((message) => `${message.role === "assistant" ? "COS-IG" : "Client"}: ${message.content}`)
+    .join("\n\n");
+}
+
+function extractOutputText(responseBody: unknown) {
+  if (!responseBody || typeof responseBody !== "object") return "";
+
+  const body = responseBody as {
+    output_text?: unknown;
+    output?: Array<{ content?: Array<{ text?: unknown }> }>;
+  };
+
+  if (typeof body.output_text === "string") {
+    return body.output_text.trim();
   }
 
-  if (lower.includes("admin") || lower.includes("permission") || lower.includes("auth")) {
-    return "Admin mode should be protected before sensitive integrations go live. I recommend Clerk or Supabase Auth, then role-gate Admin, Integrations, and Approval settings.";
-  }
+  return (
+    body.output
+      ?.flatMap((item) => item.content || [])
+      .map((content) => (typeof content.text === "string" ? content.text : ""))
+      .join("\n")
+      .trim() || ""
+  );
+}
 
-  if (lower.includes("roas") || lower.includes("revenue") || lower.includes("attribution")) {
-    return "The 5x ROAS floor is built into the dashboard, but live ROAS remains pending until Stripe reconciliation, Meta, Google Ads, GA4, and GSC are connected. I will not report unreconciled numbers as final.";
-  }
-
-  if (lower.includes("deploy") || lower.includes("vercel")) {
-    return "The app is structured for Vercel as a Next.js App Router project. The old static GitHub Pages dashboard should stay as reference, while Vercel serves the production software dashboard.";
-  }
-
-  return "I checked the COS-IG context. The safest next move is to clear production access blockers, keep clinical and paid creative approvals gated, and prioritize dashboard features that improve attribution, approvals, and daily founder visibility.";
+function fallbackAnswer() {
+  return "I can see the Injectors Guide business context, but production AI is not configured yet. Add OPENAI_API_KEY in the deployment environment so this chat can respond with the live COS-IG model.";
 }
 
 export async function POST(request: Request) {
-  const body = (await request.json().catch(() => ({}))) as ChatRequest;
-  const prompt = body.prompt?.trim() || "";
+  const account = await getSessionAccount();
 
-  return NextResponse.json({
-    answer: buildAnswer(prompt),
-    source: "cos-ig-static-context",
-    productionAiConnected: false
-  });
+  if (!account) {
+    return NextResponse.json({ error: "Authentication required." }, { status: 401 });
+  }
+
+  const body = (await request.json().catch(() => ({}))) as ChatRequest;
+  const messages = buildConversation(body);
+
+  if (messages.length === 0) {
+    return NextResponse.json({ error: "Message required." }, { status: 400 });
+  }
+
+  if (!process.env.OPENAI_API_KEY) {
+    return NextResponse.json(
+      {
+        answer: fallbackAnswer(),
+        source: "cos-ig-business-context",
+        productionAiConnected: false
+      },
+      { status: 503 }
+    );
+  }
+
+  const instructions = await buildCosIgInstructions(account);
+  const transcript = transcriptFromMessages(messages);
+
+  try {
+    const openaiResponse = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: OPENAI_MODEL,
+        instructions,
+        input: transcript,
+        max_output_tokens: 900
+      })
+    });
+
+    const responseBody = await openaiResponse.json().catch(() => ({}));
+
+    if (!openaiResponse.ok) {
+      const message =
+        typeof responseBody === "object" &&
+        responseBody &&
+        "error" in responseBody &&
+        typeof responseBody.error === "object" &&
+        responseBody.error &&
+        "message" in responseBody.error
+          ? String(responseBody.error.message)
+          : "OpenAI request failed.";
+
+      return NextResponse.json(
+        {
+          error: message,
+          answer:
+            "I reached the dashboard context, but the AI model call failed. Check the OpenAI key, model name, and deployment logs.",
+          source: "cos-ig-business-context",
+          productionAiConnected: false
+        },
+        { status: 502 }
+      );
+    }
+
+    return NextResponse.json({
+      answer:
+        extractOutputText(responseBody) ||
+        "I checked the Injectors Guide context, but the model returned an empty response. Try rephrasing the question.",
+      model: OPENAI_MODEL,
+      source: "cos-ig-business-context",
+      productionAiConnected: true
+    });
+  } catch {
+    return NextResponse.json(
+      {
+        answer:
+          "I could not reach OpenAI from this deployment. The dashboard route is wired; check network access and the OPENAI_API_KEY environment variable.",
+        source: "cos-ig-business-context",
+        productionAiConnected: false
+      },
+      { status: 502 }
+    );
+  }
 }
